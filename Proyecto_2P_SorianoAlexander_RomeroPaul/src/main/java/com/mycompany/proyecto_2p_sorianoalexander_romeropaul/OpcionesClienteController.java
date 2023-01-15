@@ -6,7 +6,11 @@ package com.mycompany.proyecto_2p_sorianoalexander_romeropaul;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 /**
  * FXML Controller class
@@ -21,6 +25,26 @@ public class OpcionesClienteController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }  
+    
+    @FXML
+    private Button btnPedido;
+    @FXML
+    private Button btnEncontrarLocal;
+    @FXML
+    private Label lblBienvenida;
+    
+    @FXML
+    public void EncontrarLocal(ActionEvent ae){
+        
+        
+    }
+    
+    @FXML
+    public void HacerPedido(ActionEvent ae){
+      
+        
+    }
+    
     
 }
