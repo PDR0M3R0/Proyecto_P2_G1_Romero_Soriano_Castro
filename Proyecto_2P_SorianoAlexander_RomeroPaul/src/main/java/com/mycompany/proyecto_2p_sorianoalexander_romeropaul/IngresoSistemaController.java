@@ -30,8 +30,6 @@ import javafx.stage.Stage;
  * @author pdrb1
  */
 public class IngresoSistemaController implements Initializable {
-    
-        
 
     /**
      * Initializes the controller class.
@@ -39,9 +37,12 @@ public class IngresoSistemaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
-    }   
-    
+
+    }
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
     @FXML
     private ImageView seccionView1;
     @FXML
@@ -52,57 +53,56 @@ public class IngresoSistemaController implements Initializable {
     private TextField txtUsuario;
     @FXML
     private TextField txtContrasena;
-    
+
     //Metodos del controlador: 
     @FXML
-    public void ingresar(ActionEvent ae) throws IOException{
+    public void ingresar(ActionEvent ae) throws IOException {
         String usuario = txtUsuario.getText();
         String contrasena = txtContrasena.getText();
-        
-        if(verificacionUsuario(usuario,contrasena) == true){
+
+        if (verificacionUsuario(usuario, contrasena) == true) {
             System.out.println("ingreso");
             cambioVista(ae);
-        }else{
+        } else {
             System.out.println("No funciona metodo ingresar");
         }
     }
-    
-    public void cambioVista(ActionEvent ae) throws IOException{      
-        FXMLLoader fxmlloader = new FXMLLoader(Principal.class.getResource("OpcionesCliente.fxml"));
-        Stage s2 = new Stage();
-        Parent root = fxmlloader.load();
-        escena = new Scene(root,600,600);
-        s2.setScene(escena);
-        s2.setTitle("The Good Burguer Restaurant");
-        s2.show();
-        
+
+    public void cambioVista(ActionEvent ae) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("OpcionesCliente.fxml"));
+        stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
-    
-    public boolean verificacionUsuario(String usuario,String contrasena){
+
+    public boolean verificacionUsuario(String usuario, String contrasena) {
         ArrayList<String[]> parametros = new ArrayList<>();
-        
-        try(BufferedReader br = new BufferedReader(new FileReader("Usuarios.txt"))){
+
+        try ( BufferedReader br = new BufferedReader(new FileReader("Usuarios.txt"))) {
             String linea;
-            
-            while((linea = br.readLine())!= null){
+
+            while ((linea = br.readLine()) != null) {
                 System.out.println(linea);
                 String[] pr = linea.split(",");
                 parametros.add(pr);
-                
+
             }
-                                   
-        }catch(IOException ioe){
+
+        } catch (IOException ioe) {
             System.out.println("Ha ocurrido un error!");
-            
+
         }
-        
-        for(String[] s:parametros){
+
+        for (String[] s : parametros) {
             System.out.println("Entro al for");
             String u = s[0];
             String c = s[1];
-            
-            return usuario.equals(u) || contrasena.equals(c);
-        }     
+
+            if (usuario.equals(u) || contrasena.equals(c)) {
+                return true;
+            } 
+        }
         return false;
-    } 
+    }
 }
