@@ -99,10 +99,33 @@ public class IngresoSistemaController implements Initializable {
             String u = s[0];
             String c = s[1];
 
-            if (usuario.equals(u) || contrasena.equals(c)) {
+            if (usuario.equals(u) && contrasena.equals(c)) {
                 return true;
-            } 
+            } else if (usuario.equals(u) || contrasena.equals(c)) {
+                if (usuario.equals(u)) {
+                    txtContrasena.clear();
+                    Alert alerta = new Alert(AlertType.WARNING);
+                    alerta.setTitle("Contraseña equivocada");
+                    alerta.setHeaderText("Ingrese nuevamente su contraseña");
+                    alerta.showAndWait();
+                    return false;
+                } else if (contrasena.equals(c)) {
+                    txtUsuario.clear();
+                    Alert alerta = new Alert(AlertType.WARNING);
+                    alerta.setTitle("Usuario equivocado");
+                    alerta.setHeaderText("Ingrese nuevamente su usuario");
+                    alerta.showAndWait();
+                    return false;
+                }
+            }
         }
+        Alert alerta = new Alert(AlertType.WARNING);
+        alerta.setTitle("Datos incorrectos");
+        alerta.setHeaderText("Ingrese nuevamente sus datos");
+        alerta.showAndWait();
+        txtUsuario.clear();
+        txtContrasena.clear();
         return false;
+
     }
 }
