@@ -18,6 +18,7 @@ public class Principal extends Application{
     
     @Override
     public void start(Stage s) throws Exception{
+        
         FXMLLoader fxmlloader = new FXMLLoader(Principal.class.getResource("IngresoSistema.fxml"));
         
         Parent root = fxmlloader.load();
