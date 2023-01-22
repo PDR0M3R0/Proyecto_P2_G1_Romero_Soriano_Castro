@@ -1,5 +1,6 @@
 package com.mycompany.proyecto_2p_sorianoalexander_romeropaul;
 
+import Clases.Usuario;
 import static com.mycompany.proyecto_2p_sorianoalexander_romeropaul.Principal.escena;
 import static com.mycompany.proyecto_2p_sorianoalexander_romeropaul.Principal.pathFXML;
 import java.io.BufferedReader;
@@ -30,7 +31,8 @@ import javafx.stage.Stage;
  * @author pdrb1
  */
 public class IngresoSistemaController implements Initializable {
-
+    public static ArrayList<Usuario> usuarios = new ArrayList<>();
+    public static Usuario usuarioIngreso;
     /**
      * Initializes the controller class.
      */
@@ -78,15 +80,21 @@ public class IngresoSistemaController implements Initializable {
 
     public boolean verificacionUsuario(String usuario, String contrasena) {
         ArrayList<String[]> parametros = new ArrayList<>();
-
+        
         try ( BufferedReader br = new BufferedReader(new FileReader("Usuarios.txt"))) {
             String linea;
 
             while ((linea = br.readLine()) != null) {
                 System.out.println(linea);
                 String[] pr = linea.split(",");
-                parametros.add(pr);
-
+                
+                String u = pr[0];
+                String c = pr[1];
+                String nombreApellidos = pr[2];
+                
+                Usuario uu = new Usuario(u,c,nombreApellidos);
+                usuarios.add(uu);
+                
             }
 
         } catch (IOException ioe) {
@@ -94,37 +102,42 @@ public class IngresoSistemaController implements Initializable {
 
         }
 
-        for (String[] s : parametros) {
-            System.out.println("Entro al for");
-            String u = s[0];
-            String c = s[1];
-
-            if (usuario.equals(u) && contrasena.equals(c)) {
+        for (Usuario u : usuarios) {
+            
+            if (u.getUsuario().equals(usuario) && u.getContrasena().equals(contrasena)) {
+                usuarioIngreso = u;
                 return true;
-            } else if (usuario.equals(u) || contrasena.equals(c)) {
-                if (usuario.equals(u)) {
+                
+            } else if (u.getUsuario().equals(usuario) || u.getContrasena().equals(contrasena)) {
+                if (u.getUsuario().equals(usuario)) {
                     txtContrasena.clear();
                     Alert alerta = new Alert(AlertType.WARNING);
                     alerta.setTitle("Contraseña equivocada");
                     alerta.setHeaderText("Ingrese nuevamente su contraseña");
                     alerta.showAndWait();
+                    
                     return false;
-                } else if (contrasena.equals(c)) {
+                    
+                } else if (contrasena.equals(contrasena)) {
                     txtUsuario.clear();
                     Alert alerta = new Alert(AlertType.WARNING);
                     alerta.setTitle("Usuario equivocado");
                     alerta.setHeaderText("Ingrese nuevamente su usuario");
                     alerta.showAndWait();
+                    
                     return false;
+                    
                 }
             }
         }
+        
         Alert alerta = new Alert(AlertType.WARNING);
         alerta.setTitle("Datos incorrectos");
         alerta.setHeaderText("Ingrese nuevamente sus datos");
         alerta.showAndWait();
         txtUsuario.clear();
         txtContrasena.clear();
+        
         return false;
 
     }
