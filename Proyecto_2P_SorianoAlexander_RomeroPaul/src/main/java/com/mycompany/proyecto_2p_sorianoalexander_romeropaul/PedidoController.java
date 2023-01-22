@@ -88,6 +88,7 @@ public class PedidoController implements Initializable {
                double precio = Double.parseDouble(p[1]);
                String tipo = p[2];
                
+               Menu m = new Menu(descripcion,precio,tipo);
                               
            }
             
