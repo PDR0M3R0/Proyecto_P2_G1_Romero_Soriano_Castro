@@ -1,0 +1,14 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 22 ene. 2023, 15:00:41
+    Author     : axsl3
+*/
+
+.VentanaMapa{
+    -fx-background-image: url("mapa.png");
+    -fx-background-size: 100% 100%;
+  
+}

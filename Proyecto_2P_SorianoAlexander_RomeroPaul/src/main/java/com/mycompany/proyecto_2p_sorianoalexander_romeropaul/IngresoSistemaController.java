@@ -83,7 +83,7 @@ public class IngresoSistemaController implements Initializable {
             String linea;
 
             while ((linea = br.readLine()) != null) {
-                System.out.println(linea);
+                
                 String[] pr = linea.split(",");
                 parametros.add(pr);
 
@@ -95,7 +95,7 @@ public class IngresoSistemaController implements Initializable {
         }
 
         for (String[] s : parametros) {
-            System.out.println("Entro al for");
+
             String u = s[0];
             String c = s[1];
 

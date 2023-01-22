@@ -4,23 +4,28 @@
  */
 package com.mycompany.proyecto_2p_sorianoalexander_romeropaul.modelo;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
 /**
  *
  * @author axsl3
  */
 public class Local {
+
     String nombre;
     String direccion;
     String horario;
-    int calificacion;
-    int coordenadaX;
-    int coordenadaY;
+    double coordenadaX;
+    double coordenadaY;
 
-    public Local(String nombre, String direccion, String horario, int calificacion, int coordenadaX, int coordenadaY) {
+    public Local(String nombre, String direccion, String horario, double coordenadaX, double coordenadaY) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.horario = horario;
-        this.calificacion = calificacion;
+
         this.coordenadaX = coordenadaX;
         this.coordenadaY = coordenadaY;
     }
@@ -49,28 +54,43 @@ public class Local {
         this.horario = horario;
     }
 
-    public int getCalificacion() {
-        return calificacion;
-    }
-
-    public void setCalificacion(int calificacion) {
-        this.calificacion = calificacion;
-    }
-
-    public int getCoordenadaX() {
+    public double getCoordenadaX() {
         return coordenadaX;
     }
 
-    public void setCoordenadaX(int coordenadaX) {
+    public void setCoordenadaX(double coordenadaX) {
         this.coordenadaX = coordenadaX;
     }
 
-    public int getCoordenadaY() {
+    public double getCoordenadaY() {
         return coordenadaY;
     }
 
-    public void setCoordenadaY(int coordenadaY) {
+    public void setCoordenadaY(double coordenadaY) {
         this.coordenadaY = coordenadaY;
     }
-    
+
+    public static ArrayList<Local> leerLocales() {
+        try ( BufferedReader bfr = new BufferedReader(new FileReader("Locales.txt"))) {
+            ArrayList<Local> local = new ArrayList<>();
+            String linea= bfr.readLine();
+            while (linea != null) {
+                String[] lineas = linea.trim().strip().split(",");
+                String nombre = lineas[0];
+                String direccion = lineas[1];
+                String horario = lineas[2];
+                double coordX = Double.parseDouble(lineas[3]);
+                double coordY = Double.parseDouble(lineas[4]);
+                Local lo = new Local(nombre, direccion, horario, coordX, coordY);
+                local.add(lo);
+               
+                linea = bfr.readLine();
+
+            }
+            return local;
+
+        } catch (IOException ex) {
+            return null;
+        }
+    }
 }

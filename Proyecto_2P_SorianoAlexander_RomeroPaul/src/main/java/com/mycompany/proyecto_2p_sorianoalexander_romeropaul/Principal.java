@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 public class Principal extends Application{
     public static Scene escena;
     public static String pathFXML = "src/main/resources/com/mycompany/proyecto_2p_sorianoalexander_romeropaul/";
-    
+    public static String pathImages = "src/main/resources/Imagenes/";
     @Override
     public void start(Stage s) throws Exception{
         

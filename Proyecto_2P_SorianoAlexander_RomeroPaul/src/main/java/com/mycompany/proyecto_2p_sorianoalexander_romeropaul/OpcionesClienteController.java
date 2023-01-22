@@ -24,40 +24,45 @@ import javafx.stage.Stage;
  * @author pdrb1
  */
 public class OpcionesClienteController implements Initializable {
+
     private Stage stage;
     private Parent root;
-    private Scene escena; 
-    
+    private Scene escena;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }  
-    
+    }
+
     @FXML
     private Button btnPedido;
     @FXML
     private Button btnEncontrarLocal;
     @FXML
     private Label lblBienvenida;
-    
+
     @FXML
-    public void EncontrarLocal(ActionEvent ae){
-        
-        
+    public void EncontrarLocal(ActionEvent ae) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("LocalesMapa.fxml"));
+        stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
+        escena = new Scene(root,900,500);
+        stage.setScene(escena);
+        stage.setResizable(false);
+        stage.show();
+
     }
-    
+
     @FXML
-    public void HacerPedido(ActionEvent ae) throws IOException{
+    public void HacerPedido(ActionEvent ae) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("Pedido.fxml"));
         stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
         escena = new Scene(root);
         stage.setScene(escena);
         stage.show();
-        
+
     }
-    
-    
+
 }
