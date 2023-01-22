@@ -1,10 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package com.mycompany.proyecto_2p_sorianoalexander_romeropaul;
 
-import com.mycompany.proyecto_2p_sorianoalexander_romeropaul.modelo.TipoMenu;
+import com.mycompany.proyecto_2p_sorianoalexander_romeropaul.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -16,7 +12,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Menu;
 import javafx.scene.layout.GridPane;
-import com.mycompany.proyecto_2p_sorianoalexander_romeropaul.modelo.MenuC;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * FXML Controller class
@@ -28,9 +27,11 @@ public class PedidoController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
     }    
     
     @FXML
@@ -60,10 +61,41 @@ public class PedidoController implements Initializable {
     
     @FXML
     public void mostrarCombo(ActionEvent ae){
-        System.out.println("actuo el combos");
-        ObservableList<String> tipos = FXCollections.observableArrayList();           
-        tipos.addAll("F", TipoMenu.P.toString(), TipoMenu.B.toString(), TipoMenu.Q.toString());
-        comboTipo =new ComboBox(tipos);
+//        System.out.println("actuo el combos");
+//        ObservableList<String> tipos = FXCollections.observableArrayList();           
+//        tipos.addAll("F", TipoMenu.P.toString(), TipoMenu.B.toString(), TipoMenu.Q.toString());
+//        comboTipo = new ComboBox(tipos);
+
+        
+    }
+    
+    public ArrayList<Menu> cargarCombos(){
+        ArrayList<String[]> listaParametros = new ArrayList<>();
+        ArrayList<Menu> menulista = new ArrayList<>();
+        
+        try(BufferedReader br = new BufferedReader(new FileReader("menu.txt"))){
+           String linea;
+           linea = br.readLine();//salto de linea
+           
+           while((linea = br.readLine()) != null){
+               String[] parametros = linea.split(",");
+               listaParametros.add(parametros);
+               
+           }
+           
+           for(String[] p:listaParametros){
+               String descripcion = p[0];
+               double precio = Double.parseDouble(p[1]);
+               String tipo = p[2];
+               
+                              
+           }
+            
+        }catch(IOException ioe){
+            
+        }     
+        
+        return menulista;
     }
     
     @FXML

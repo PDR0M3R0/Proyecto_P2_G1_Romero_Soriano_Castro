@@ -41,7 +41,7 @@ public class IngresoSistemaController implements Initializable {
     }
     private Stage stage;
     private Scene scene;
-    private Parent root;
+   
 
     @FXML
     private ImageView seccionView1;

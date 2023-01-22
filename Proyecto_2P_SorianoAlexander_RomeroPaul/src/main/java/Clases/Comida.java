@@ -1,4 +1,4 @@
-package com.mycompany.proyecto_2p_sorianoalexander_romeropaul.modelo;
+package Clases;
 
 /**
  *
