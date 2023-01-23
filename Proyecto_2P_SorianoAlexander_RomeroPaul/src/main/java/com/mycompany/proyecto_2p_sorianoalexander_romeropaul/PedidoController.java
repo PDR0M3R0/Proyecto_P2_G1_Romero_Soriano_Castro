@@ -71,77 +71,60 @@ public class PedidoController implements Initializable {
     public void elegirTipo(ActionEvent ae){
       ArrayList<Menu> lista = new ArrayList<>();
       String opcion = comboTipo.getValue();
+
       
-      if(opcion.equals("Platos Fuertes")){
-          String tipo = "F";
-          mostrarEnGridPane(tipo);
-            
-          
-      }else if(opcion.equals("Piqueos")){
-          String tipo = "Q";
-          Thread t = new Thread(new Runnable(){
-            @Override
-              public void run(){
-                Platform.runLater(new Runnable(){
-                  @Override
-                  public void run(){
-                      mostrarEnGridPane(tipo);
-                  }
-                });
-              }
-          });
-          
-          t.start();
-          
-      }else if(opcion.equals("Postres")){          
-          String tipo = "P";
-          
-          Platform.runLater(new Runnable(){
-            @Override
-            public void run(){
+      
+            if(opcion.equals("Platos Fuertes")){
+                String tipo = "F";
                 mostrarEnGridPane(tipo);
-            }
-          });
-          
-      }else if(opcion.equals("Bebidas")){
-          String tipo = "B";
-          Platform.runLater(new Runnable(){
-            @Override
-            public void run(){
+
+
+            }else if(opcion.equals("Piqueos")){
+                String tipo = "Q";
                 mostrarEnGridPane(tipo);
-            }
-        });
-      }     
+
+
+            }else if(opcion.equals("Postres")){          
+                String tipo = "P";
+                mostrarEnGridPane(tipo);
+
+            }else if(opcion.equals("Bebidas")){
+                String tipo = "B";
+                mostrarEnGridPane(tipo);  
+            }  
+        
     }
     
+    //Aqui te muestra en el mimso gridOpciones 
     public void mostrarEnGridPane(String tipo){
-        for(Menu m:menulista){
-            if(m.getTipo().equals(tipo)){
-                
-                HBox seccDescripcion = new HBox();
-                Label lbldescripcion = new Label(m.getDescripcion());
-                seccDescripcion.getChildren().add(lbldescripcion);
+        for(int i=0;i<menulista.size();i++){            
+            if(menulista.get(i).getTipo().equals(tipo)){                
+                //HBox seccDescripcion = new HBox();
+                Label lbldescripcion = new Label(menulista.get(i).getDescripcion());
+                //seccDescripcion.getChildren().add(lbldescripcion);
 
-                HBox seccPrecio = new HBox();
-                Label lblprecio = new Label(String.valueOf(m.getPrecio()));
-                seccPrecio.getChildren().add(lblprecio);
+                //HBox seccPrecio = new HBox();
+                Label lblprecio = new Label(String.valueOf(menulista.get(i).getPrecio()));
+                //seccPrecio.getChildren().add(lblprecio);
 
-                HBox seccCant = new HBox();
+                //HBox seccCant = new HBox();
                 TextField cant = new TextField();
-                seccCant.getChildren().add(cant);
+                //seccCant.getChildren().add(cant);
 
-                HBox seccAgre = new HBox();
+                //HBox seccAgre = new HBox();
                 Button btnEscoger = new Button("Agregar");
-                seccDescripcion.getChildren().add(btnEscoger);
-
-
-                //Para anadir 4 columnas
-                gridOpciones.setConstraints(seccDescripcion,1,0);
-                gridOpciones.setConstraints(seccPrecio,1,0);
-                gridOpciones.setConstraints(seccCant,1,0);
-                gridOpciones.setConstraints(seccAgre,1,0);
+                //seccDescripcion.getChildren().add(btnEscoger);
                 
-        
+               
+                
+                //Para anadir 4 columnas
+                GridPane.setConstraints(lbldescripcion,0,i+1);
+                GridPane.setConstraints(lblprecio,1,i+1);
+                GridPane.setConstraints(cant,2,i+1);
+                GridPane.setConstraints(btnEscoger,3,i+1);
+                
+                gridOpciones.getChildren().addAll(lbldescripcion,lblprecio,cant,btnEscoger);
+                
             }                   
         }
     }
