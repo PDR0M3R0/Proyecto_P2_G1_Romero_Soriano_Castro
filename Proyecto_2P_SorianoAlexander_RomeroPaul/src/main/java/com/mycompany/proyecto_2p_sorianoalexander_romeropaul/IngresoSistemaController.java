@@ -33,18 +33,17 @@ import javafx.stage.Stage;
 public class IngresoSistemaController implements Initializable {
     public static ArrayList<Usuario> usuarios = new ArrayList<>();
     public static Usuario usuarioIngreso;
-    /**
-     * Initializes the controller class.
-     */
+    private Stage stage;
+    private Scene scene;
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
 
     }
-    private Stage stage;
-    private Scene scene;
+    
    
-
     @FXML
     private ImageView seccionView1;
     @FXML
@@ -56,6 +55,7 @@ public class IngresoSistemaController implements Initializable {
     @FXML
     private TextField txtContrasena;
 
+    
     //Metodos del controlador: 
     @FXML
     public void ingresar(ActionEvent ae) throws IOException {
@@ -102,43 +102,36 @@ public class IngresoSistemaController implements Initializable {
 
         }
 
-<<<<<<< HEAD
-        for (String[] s : parametros) {
 
-            String u = s[0];
-            String c = s[1];
-
-            if (usuario.equals(u) && contrasena.equals(c)) {
-=======
-        for (Usuario u : usuarios) {
+        for (Usuario usu : usuarios) {
             
-            if (u.getUsuario().equals(usuario) && u.getContrasena().equals(contrasena)) {
-                usuarioIngreso = u;
->>>>>>> Edicion_Pedido
+            if (usu.getUsuario().equals(usuario) && usu.getContrasena().equals(contrasena)) {
+                usuarioIngreso = usu;
+
                 return true;
-                
-            } else if (u.getUsuario().equals(usuario) || u.getContrasena().equals(contrasena)) {
-                if (u.getUsuario().equals(usuario)) {
+
+            } else if (usu.getUsuario().equals(usuario) || usu.getContrasena().equals(contrasena)) {
+                if (usu.getUsuario().equals(usuario)) {
                     txtContrasena.clear();
                     Alert alerta = new Alert(AlertType.WARNING);
                     alerta.setTitle("Contraseña equivocada");
                     alerta.setHeaderText("Ingrese nuevamente su contraseña");
                     alerta.showAndWait();
-                    
+
                     return false;
-                    
+
                 } else if (contrasena.equals(contrasena)) {
                     txtUsuario.clear();
                     Alert alerta = new Alert(AlertType.WARNING);
                     alerta.setTitle("Usuario equivocado");
                     alerta.setHeaderText("Ingrese nuevamente su usuario");
                     alerta.showAndWait();
-                    
+
                     return false;
-                    
+
                 }
             }
-        }
+            
         
         Alert alerta = new Alert(AlertType.WARNING);
         alerta.setTitle("Datos incorrectos");
@@ -147,7 +140,10 @@ public class IngresoSistemaController implements Initializable {
         txtUsuario.clear();
         txtContrasena.clear();
         
-        return false;
-
+        
     }
+    return false;    
+  }  
+  
 }
+

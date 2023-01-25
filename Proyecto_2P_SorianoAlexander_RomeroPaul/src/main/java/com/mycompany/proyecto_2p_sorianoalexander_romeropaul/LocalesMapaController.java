@@ -4,7 +4,7 @@
  */
 package com.mycompany.proyecto_2p_sorianoalexander_romeropaul;
 
-import com.mycompany.proyecto_2p_sorianoalexander_romeropaul.modelo.Local;
+import Clases.Local;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;

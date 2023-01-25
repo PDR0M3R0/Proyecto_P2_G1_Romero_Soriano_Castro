@@ -180,7 +180,7 @@
                   </GridPane>
                   <VBox prefHeight="75.0" prefWidth="100.0">
                      <children>
-                        <HBox prefHeight="25.0" prefWidth="200.0" spacing="20.0">
+                        <HBox fx:id="hsubtotal" prefHeight="25.0" prefWidth="200.0" spacing="20.0">
                            <children>
                               <Label text="Subtotal:" textFill="#f7cb5d">
                                  <font>
@@ -190,7 +190,7 @@
                               <Label fx:id="lblSubtotal" text="Label" />
                            </children>
                         </HBox>
-                        <HBox prefHeight="25.0" prefWidth="200.0" spacing="20.0">
+                        <HBox fx:id="hiva" prefHeight="25.0" prefWidth="200.0" spacing="20.0">
                            <children>
                               <Label text="IVA:" textFill="#f7cb5d">
                                  <font>
@@ -200,7 +200,7 @@
                               <Label fx:id="lblIVA" text="Label" />
                            </children>
                         </HBox>
-                        <HBox prefHeight="25.0" prefWidth="200.0" spacing="20.0">
+                        <HBox fx:id="htotal" prefHeight="25.0" prefWidth="200.0" spacing="20.0">
                            <children>
                               <Label text="Total:" textFill="#f7cb5d">
                                  <font>

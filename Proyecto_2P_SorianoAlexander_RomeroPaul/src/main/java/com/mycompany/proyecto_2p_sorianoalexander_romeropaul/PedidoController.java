@@ -69,6 +69,13 @@ public class PedidoController implements Initializable {
     private Label lblIVA;
     @FXML
     private Label lblSubtotal;
+    @FXML
+    private HBox hsubtotal;
+    @FXML
+    private HBox htotal;
+    @FXML
+    private HBox hiva;
+            
     
     @FXML
     public void limpiar(ActionEvent ae){
@@ -188,7 +195,7 @@ public class PedidoController implements Initializable {
         Platform.runLater(new Runnable(){
             public void run(){
                 for(int i = 0;i<pedidolista.size();i++){
-                    Label lbldesc = new Label(pedidolista.get(i).getDescripcion());
+                    Label lbldesc = new Label(pedidolista.get(i).getDescripcion()); 
                     Label lblcant = new Label(String.valueOf(pedidolista.get(i).getCantidad()));
                     Label lblpre = new Label(String.valueOf(pedidolista.get(i).totalCant()));
 
@@ -196,22 +203,20 @@ public class PedidoController implements Initializable {
                     GridPane.setConstraints(lblcant,1,i+1);
                     GridPane.setConstraints(lblpre,2,i+1);
 
-                    gridPedido.getChildren().addAll(lbldesc,lblcant,lblpre);
-                    
-                    
-                }
+                    gridPedido.getChildren().addAll(lbldesc,lblpre,lblcant);
+                }    
                 
-                for(Pedido p:pedidolista){
-                    double suma = p.totalCant();
-                    double subtotal = 0.0;
+                for(int j = 0;j<pedidolista.size();j++){
+                    double suma = pedidolista.get(j).totalCant();
                     total += suma;
                     
-                    double subtotalIVA = subtotal + (subtotal*0.14);
-                    lblSubtotal.setText(String.valueOf(subtotal));
+                  
+                    double subtotalIVA = total + (total*0.14);
+                    lblSubtotal.setText(String.valueOf(total));
                     lblIVA.setText("12%");
                     lblTotal.setText(String.valueOf(subtotalIVA));
+                   
                 }
-                
                 
             }
         });
@@ -220,7 +225,7 @@ public class PedidoController implements Initializable {
     
     // Metodo para crear Archivo de pedido formato(idPedido - nombre Cliente - Total)
     public void registrarPedido(ArrayList<Pedido> listaPedido){
-        double total = 0.0;
+        
         for(Pedido p:listaPedido){
             total += p.getValor();
         }
