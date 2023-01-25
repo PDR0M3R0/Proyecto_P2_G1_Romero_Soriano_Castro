@@ -1,7 +1,5 @@
-
 package com.mycompany.proyecto_2p_sorianoalexander_romeropaul;
 
-import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

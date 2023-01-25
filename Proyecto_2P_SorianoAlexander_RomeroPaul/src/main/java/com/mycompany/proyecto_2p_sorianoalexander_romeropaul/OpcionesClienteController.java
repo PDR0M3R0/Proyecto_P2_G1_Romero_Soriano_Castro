@@ -4,6 +4,7 @@
  */
 package com.mycompany.proyecto_2p_sorianoalexander_romeropaul;
 
+import static com.mycompany.proyecto_2p_sorianoalexander_romeropaul.IngresoSistemaController.usuarioIngreso;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -35,7 +36,9 @@ public class OpcionesClienteController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }
+        lblBienvenida.setText("Bienvenid@ " + usuarioIngreso.getNombreApellido());
+    }  
+    
 
     @FXML
     private Button btnPedido;

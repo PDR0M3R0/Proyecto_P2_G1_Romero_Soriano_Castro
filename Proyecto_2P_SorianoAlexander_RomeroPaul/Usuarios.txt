@@ -1,2 +1,3 @@
-pdromero,freak123
-axsorian,qwe123
+pdromero,freak123,Paul Romero
+axsorian,qwe123,Alex Soriano
+elsicast,pan123,Elsie Castro
