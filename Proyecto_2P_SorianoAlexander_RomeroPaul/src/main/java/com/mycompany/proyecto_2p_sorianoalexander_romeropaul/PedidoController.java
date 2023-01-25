@@ -1,6 +1,8 @@
 package com.mycompany.proyecto_2p_sorianoalexander_romeropaul;
 
 import Clases.Menu;
+import Clases.Pedido;
+import static com.mycompany.proyecto_2p_sorianoalexander_romeropaul.IngresoSistemaController.usuarioIngreso;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -10,15 +12,21 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.GridPane;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
@@ -27,6 +35,8 @@ import javafx.scene.layout.RowConstraints;
  */
 public class PedidoController implements Initializable {
     static ArrayList<Menu> menulista = new ArrayList<>();
+    static ArrayList<Pedido> pedidolista = new ArrayList<>();
+    double total = 0.0;
     /**
      * Initializes the controller class.
      */
@@ -53,36 +63,39 @@ public class PedidoController implements Initializable {
     private Button btnContinuar;
     @FXML
     private Button btnLimpiar;
-    
+    @FXML
+    private Label lblTotal;
+    @FXML
+    private Label lblIVA;
+    @FXML
+    private Label lblSubtotal;
     
     @FXML
     public void limpiar(ActionEvent ae){
+        pedidolista.clear();
         
     }
     
     
     @FXML
     public void continuar(ActionEvent ae){
+        //aqui se debe registrar el pedido
+        registrarPedido(pedidolista);
         
     }
     
     
     @FXML
     public void elegirTipo(ActionEvent ae){
-      ArrayList<Menu> lista = new ArrayList<>();
-      String opcion = comboTipo.getValue();
-
-      
+        String opcion = comboTipo.getValue();
       
             if(opcion.equals("Platos Fuertes")){
                 String tipo = "F";
                 mostrarEnGridPane(tipo);
 
-
             }else if(opcion.equals("Piqueos")){
                 String tipo = "Q";
                 mostrarEnGridPane(tipo);
-
 
             }else if(opcion.equals("Postres")){          
                 String tipo = "P";
@@ -97,14 +110,15 @@ public class PedidoController implements Initializable {
     
     //Aqui te muestra en el mimso gridOpciones 
     public void mostrarEnGridPane(String tipo){
-        for(int i=0;i<menulista.size();i++){            
+        for(int i=0;i<menulista.size();i++){
+            Menu m = menulista.get(i);
             if(menulista.get(i).getTipo().equals(tipo)){                
                 //HBox seccDescripcion = new HBox();
-                Label lbldescripcion = new Label(menulista.get(i).getDescripcion());
+                Label lbldescripcion = new Label(m.getDescripcion());
                 //seccDescripcion.getChildren().add(lbldescripcion);
 
                 //HBox seccPrecio = new HBox();
-                Label lblprecio = new Label(String.valueOf(menulista.get(i).getPrecio()));
+                Label lblprecio = new Label(String.valueOf(m.getPrecio()));
                 //seccPrecio.getChildren().add(lblprecio);
 
                 //HBox seccCant = new HBox();
@@ -115,7 +129,17 @@ public class PedidoController implements Initializable {
                 Button btnEscoger = new Button("Agregar");
                 //seccDescripcion.getChildren().add(btnEscoger);
                 
-               
+               btnEscoger.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                    @Override
+                    public void handle(MouseEvent t) {
+                        Pedido p = new Pedido(m.getDescripcion(),usuarioIngreso.getNombreApellido(),Integer.parseInt(cant.getText()),m.getPrecio());
+                        pedidolista.add(p);
+                        mostrarPedidos();
+                        
+                        
+                    }
+                   
+               });
                 
                 //Para anadir 4 columnas
                 GridPane.setConstraints(lbldescripcion,0,i+1);
@@ -125,7 +149,10 @@ public class PedidoController implements Initializable {
                 
                 gridOpciones.getChildren().addAll(lbldescripcion,lblprecio,cant,btnEscoger);
                 
-            }                   
+                                
+            
+                
+            }                
         }
     }
     
@@ -157,9 +184,62 @@ public class PedidoController implements Initializable {
         return menulista;
     }
     
+    public void mostrarPedidos(){
+        Platform.runLater(new Runnable(){
+            public void run(){
+                for(int i = 0;i<pedidolista.size();i++){
+                    Label lbldesc = new Label(pedidolista.get(i).getDescripcion());
+                    Label lblcant = new Label(String.valueOf(pedidolista.get(i).getCantidad()));
+                    Label lblpre = new Label(String.valueOf(pedidolista.get(i).totalCant()));
+
+                    GridPane.setConstraints(lbldesc,0,i+1);
+                    GridPane.setConstraints(lblcant,1,i+1);
+                    GridPane.setConstraints(lblpre,2,i+1);
+
+                    gridPedido.getChildren().addAll(lbldesc,lblcant,lblpre);
+                    
+                    
+                }
+                
+                for(Pedido p:pedidolista){
+                    double suma = p.totalCant();
+                    double subtotal = 0.0;
+                    total += suma;
+                    
+                    double subtotalIVA = subtotal + (subtotal*0.14);
+                    lblSubtotal.setText(String.valueOf(subtotal));
+                    lblIVA.setText("12%");
+                    lblTotal.setText(String.valueOf(subtotalIVA));
+                }
+                
+                
+            }
+        });
+        
+    }
     
-    
-    
+    // Metodo para crear Archivo de pedido formato(idPedido - nombre Cliente - Total)
+    public void registrarPedido(ArrayList<Pedido> listaPedido){
+        double total = 0.0;
+        for(Pedido p:listaPedido){
+            total += p.getValor();
+        }
+        
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter("Pedidos.txt"))){
+            for(Pedido p:listaPedido){
+                bw.write(p.getDescripcion() + "," + p.getNombreCliente() + "," + total);
+            }
+            
+        }catch(IOException ioe){
+            System.out.println("Se ha registrado un error al registrar el pedido!");
+            
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error de Registro");
+            alerta.setHeaderText("No ha sido posible registrar este pedido");
+            alerta.showAndWait();
+
+        }
+    }
     
     
     

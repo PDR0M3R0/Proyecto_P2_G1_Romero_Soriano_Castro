@@ -58,28 +58,10 @@ public class Pedido{
         this.valor = valor;
     }
    
-    // Metodo para crear Archivo de pedido formato(idPedido - nombre Cliente - Total)
-    public void registrarPedido(ArrayList<Pedido> listaPedido){
-        double total = 0.0;
-        for(Pedido p:listaPedido){
-            total += p.getValor();
-        }
-        
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter("Pedidos.txt"))){
-            for(Pedido p:listaPedido){
-                bw.write(p.getDescripcion() + "," + p.getNombreCliente() + "," + total);
-            }
-            
-        }catch(IOException ioe){
-            System.out.println("Se ha registrado un error al registrar el pedido!");
-            
-            Alert alerta = new Alert(Alert.AlertType.ERROR);
-            alerta.setTitle("Error de Registro");
-            alerta.setHeaderText("No ha sido posible registrar este pedido");
-            alerta.showAndWait();
-
-        }
+    public double totalCant(){
+        double total = this.getCantidad() * this.getValor();
+        return total;
+      
     }
-    
     
 }
