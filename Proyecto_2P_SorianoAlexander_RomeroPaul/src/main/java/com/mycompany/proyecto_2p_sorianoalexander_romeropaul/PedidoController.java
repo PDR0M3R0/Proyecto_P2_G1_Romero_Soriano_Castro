@@ -36,7 +36,7 @@ import javafx.scene.layout.VBox;
 public class PedidoController implements Initializable {
     static ArrayList<Menu> menulista = new ArrayList<>();
     static ArrayList<Pedido> pedidolista = new ArrayList<>();
-    double total = 0.0;
+    
     /**
      * Initializes the controller class.
      */
@@ -79,7 +79,10 @@ public class PedidoController implements Initializable {
     
     @FXML
     public void limpiar(ActionEvent ae){
+        gridOpciones.getChildren().clear();
+        gridPedido.getChildren().clear();
         pedidolista.clear();
+        
         
     }
     
@@ -119,6 +122,7 @@ public class PedidoController implements Initializable {
     public void mostrarEnGridPane(String tipo){
         for(int i=0;i<menulista.size();i++){
             Menu m = menulista.get(i);
+            
             if(menulista.get(i).getTipo().equals(tipo)){                
                 //HBox seccDescripcion = new HBox();
                 Label lbldescripcion = new Label(m.getDescripcion());
@@ -143,7 +147,6 @@ public class PedidoController implements Initializable {
                         pedidolista.add(p);
                         mostrarPedidos();
                         
-                        
                     }
                    
                });
@@ -156,8 +159,7 @@ public class PedidoController implements Initializable {
                 
                 gridOpciones.getChildren().addAll(lbldescripcion,lblprecio,cant,btnEscoger);
                 
-                                
-            
+                    
                 
             }                
         }
@@ -192,47 +194,45 @@ public class PedidoController implements Initializable {
     }
     
     public void mostrarPedidos(){
-        Platform.runLater(new Runnable(){
-            public void run(){
-                for(int i = 0;i<pedidolista.size();i++){
-                    Label lbldesc = new Label(pedidolista.get(i).getDescripcion()); 
-                    Label lblcant = new Label(String.valueOf(pedidolista.get(i).getCantidad()));
-                    Label lblpre = new Label(String.valueOf(pedidolista.get(i).totalCant()));
+        double total = 0.0;
+        
+        for(int i = 0;i<pedidolista.size();i++){
+            Label lbldesc = new Label(pedidolista.get(i).getDescripcion()); 
+            Label lblcant = new Label(String.valueOf(pedidolista.get(i).getCantidad()));
+            Label lblpre = new Label(String.valueOf(pedidolista.get(i).totalCant()));
 
-                    GridPane.setConstraints(lbldesc,0,i+1);
-                    GridPane.setConstraints(lblcant,1,i+1);
-                    GridPane.setConstraints(lblpre,2,i+1);
+            GridPane.setConstraints(lbldesc,0,i);
+            GridPane.setConstraints(lblcant,1,i);
+            GridPane.setConstraints(lblpre,2,i);
 
-                    gridPedido.getChildren().addAll(lbldesc,lblpre,lblcant);
-                }    
-                
-                for(int j = 0;j<pedidolista.size();j++){
-                    double suma = pedidolista.get(j).totalCant();
-                    total += suma;
-                    
-                  
-                    double subtotalIVA = total + (total*0.14);
-                    lblSubtotal.setText(String.valueOf(total));
-                    lblIVA.setText("12%");
-                    lblTotal.setText(String.valueOf(subtotalIVA));
-                   
-                }
-                
-            }
-        });
+            gridPedido.getChildren().addAll(lbldesc,lblpre,lblcant);
+        }    
+
+        for(int j = 0;j<pedidolista.size();j++){
+            double suma = pedidolista.get(j).totalCant();
+            total += suma;
+
+
+            double subtotalIVA = total + (total*0.14);
+            lblSubtotal.setText(String.valueOf(total));
+            lblIVA.setText("12%");
+            lblTotal.setText(String.valueOf(subtotalIVA));
+
+        }
         
     }
     
     // Metodo para crear Archivo de pedido formato(idPedido - nombre Cliente - Total)
     public void registrarPedido(ArrayList<Pedido> listaPedido){
+        double valor = 0.0;
         
-        for(Pedido p:listaPedido){
-            total += p.getValor();
+        for(Pedido p:listaPedido){           
+            valor += p.getValor();
         }
         
         try(BufferedWriter bw = new BufferedWriter(new FileWriter("Pedidos.txt"))){
             for(Pedido p:listaPedido){
-                bw.write(p.getDescripcion() + "," + p.getNombreCliente() + "," + total);
+                bw.write(p.getDescripcion() + "," + p.getNombreCliente() + "," + valor);
             }
             
         }catch(IOException ioe){
