@@ -19,6 +19,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -27,13 +31,14 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
  *
  * @author pdrb1
  */
-public class PedidoController implements Initializable {
+public class PedidoController implements Initializable {    
     static ArrayList<Menu> menulista = new ArrayList<>();
     static ArrayList<Pedido> pedidolista = new ArrayList<>();
     
@@ -149,6 +154,8 @@ public class PedidoController implements Initializable {
                         pedidolista.add(p);
                         mostrarPedidos();
                         
+                        
+                        
                     }
                    
                });
@@ -196,6 +203,7 @@ public class PedidoController implements Initializable {
     }
     
     public void mostrarPedidos(){
+        
         double total = 0.0;
         
         for(int i = 0;i<pedidolista.size();i++){
