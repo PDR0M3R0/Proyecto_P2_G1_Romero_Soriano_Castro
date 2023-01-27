@@ -46,7 +46,7 @@ public class PedidoController implements Initializable {
         // TODO
         menulista = leerMenu();
         comboTipo.getItems().addAll("Platos Fuertes","Postres","Piqueos","Bebidas");
-        
+        comboOrden.getItems().addAll("Precio","Nombre");
         
         
     }    
@@ -120,6 +120,7 @@ public class PedidoController implements Initializable {
     
     //Aqui te muestra en el mimso gridOpciones 
     public void mostrarEnGridPane(String tipo){
+        gridOpciones.getChildren().clear();
         for(int i=0;i<menulista.size();i++){
             Menu m = menulista.get(i);
             
@@ -141,6 +142,7 @@ public class PedidoController implements Initializable {
                 //seccDescripcion.getChildren().add(btnEscoger);
                 
                btnEscoger.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                   
                     @Override
                     public void handle(MouseEvent t) {
                         Pedido p = new Pedido(m.getDescripcion(),usuarioIngreso.getNombreApellido(),Integer.parseInt(cant.getText()),m.getPrecio());
