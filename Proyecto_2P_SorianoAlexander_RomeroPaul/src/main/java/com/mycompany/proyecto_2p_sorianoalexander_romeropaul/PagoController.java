@@ -1,15 +1,28 @@
 
 package com.mycompany.proyecto_2p_sorianoalexander_romeropaul;
 
+import static com.mycompany.proyecto_2p_sorianoalexander_romeropaul.PedidoController.totalUsuario;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -17,6 +30,11 @@ import javafx.scene.layout.VBox;
  * @author Usuario
  */
 public class PagoController implements Initializable {
+    private Stage stage;
+    private Scene scene;
+
+    @FXML
+    private ToggleGroup grupo;
 
     /**
      * Initializes the controller class.
@@ -45,8 +63,12 @@ public class PagoController implements Initializable {
     private VBox vBoxInteractive;
 
     @FXML
-    void continuar(ActionEvent event) {
-
+    void continuar(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("MuchasGracias.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
@@ -54,14 +76,51 @@ public class PagoController implements Initializable {
 
     }
 
+
+
     @FXML
-    void seleccion(ActionEvent event) {
-        if(rButtonEfectivo.isSelected()){
-            
-        }
-        if(rButtonTarjeta.isSelected()){
-            
-        }
+    private void selecEfectivo(ActionEvent event) {
+        vBoxInteractive.getChildren().clear();
+        vBoxInteractive.setAlignment(Pos.CENTER_LEFT);
+        Text texto = new Text();
+        texto.setText("Tendrá que pagar un total de "+totalUsuario+" dólares.\nAsegúrese de tener el dinero completo por si el repartidor no tiene cambio.");
+        vBoxInteractive.getChildren().add(texto);
+    }
+
+    @FXML
+    private void selecTarjeta(ActionEvent event) {
+        double nuevoTotal = (double) (Double.parseDouble(totalUsuario)+Double.parseDouble(totalUsuario)*0.05);
+        totalUsuario=String.valueOf(nuevoTotal);
+        vBoxInteractive.getChildren().clear();
+        vBoxInteractive.setAlignment(Pos.TOP_LEFT);
+        GridPane gridpane = new GridPane();
+        Label titular = new Label("Titular:");
+        Label numero = new Label("Número:");
+        Label caducidad = new Label("Caducidad:");
+        Label cvv = new Label("CVV:");
+        TextField t1 = new TextField();
+        TextField t2 = new TextField();
+        TextField t3 = new TextField();
+        TextField t4 = new TextField();
+        
+        GridPane.setConstraints(titular, 0, 0);
+        GridPane.setConstraints(t1, 1, 0);
+        GridPane.setConstraints(numero, 0, 1);
+        GridPane.setConstraints(t2, 1, 1);
+        GridPane.setConstraints(caducidad, 0, 2);
+        GridPane.setConstraints(t3, 1, 2);
+        GridPane.setConstraints(cvv, 0, 3);
+        GridPane.setConstraints(t4, 1, 3);
+        
+        gridpane.getChildren().addAll(titular, numero, caducidad, cvv, t1, t2 ,t3, t4);
+        
+        
+        
+        vBoxInteractive.getChildren().add(gridpane);
+        Text texto = new Text();
+        texto.setText("\nTendrá que pagar un total de "+totalUsuario+" dólares por el incremento del 5% por uso de la tarjeta");
+        vBoxInteractive.getChildren().add(texto);
+        
     }
 
 

@@ -41,7 +41,9 @@ import javafx.stage.Stage;
 public class PedidoController implements Initializable {    
     static ArrayList<Menu> menulista = new ArrayList<>();
     static ArrayList<Pedido> pedidolista = new ArrayList<>();
-    
+    private Stage stage;
+    private Scene scene;
+    public static String totalUsuario;
     /**
      * Initializes the controller class.
      */
@@ -93,9 +95,15 @@ public class PedidoController implements Initializable {
     
     
     @FXML
-    public void continuar(ActionEvent ae){
+    public void continuar(ActionEvent ae) throws IOException{
         //aqui se debe registrar el pedido
         registrarPedido(pedidolista);
+        
+        Parent root = FXMLLoader.load(getClass().getResource("Pago.fxml"));
+        stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
         
     }
     
@@ -229,6 +237,7 @@ public class PedidoController implements Initializable {
             lblSubtotal.setText(String.valueOf(total));
             lblIVA.setText("12%");
             lblTotal.setText(String.valueOf(subtotalIVA));
+            totalUsuario = String.valueOf(subtotalIVA);
 
         }
         
