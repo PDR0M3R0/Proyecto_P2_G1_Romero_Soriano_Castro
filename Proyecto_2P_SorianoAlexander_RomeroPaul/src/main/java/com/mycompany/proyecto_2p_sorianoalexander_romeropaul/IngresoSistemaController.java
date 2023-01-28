@@ -40,6 +40,7 @@ public class IngresoSistemaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        leerUsuarios();
 
     }
     
@@ -61,8 +62,9 @@ public class IngresoSistemaController implements Initializable {
     public void ingresar(ActionEvent ae) throws IOException {
         String usuario = txtUsuario.getText();
         String contrasena = txtContrasena.getText();
+        boolean pase = verificacionUsuario(usuario, contrasena);
 
-        if (verificacionUsuario(usuario, contrasena) == true) {
+        if ( pase == true) {
             System.out.println("ingreso");
             cambioVista(ae);
         } else {
@@ -79,6 +81,31 @@ public class IngresoSistemaController implements Initializable {
     }
 
     public boolean verificacionUsuario(String usuario, String contrasena) {
+        
+        for (Usuario usu : usuarios) {
+            
+            if (usu.getUsuario().equals(usuario) && usu.getContrasena().equals(contrasena)) {
+                usuarioIngreso = usu;
+                return true;
+
+            } else if (usu.getUsuario().equals(usuario) || usu.getContrasena().equals(contrasena)) {
+                txtUsuario.setText("");  
+                txtContrasena.setText("");
+                
+                Alert alerta = new Alert(AlertType.WARNING);
+                alerta.setTitle("Intentelo nuevamente!");
+                alerta.setHeaderText("Los datos ingresados son incorrectos");
+                alerta.showAndWait();
+                
+                return false;
+                 
+                    
+            }
+    }
+    return false;    
+  }  
+    
+    public void leerUsuarios(){
         ArrayList<String[]> parametros = new ArrayList<>();
         
         try ( BufferedReader br = new BufferedReader(new FileReader("Usuarios.txt"))) {
@@ -101,49 +128,7 @@ public class IngresoSistemaController implements Initializable {
             System.out.println("Ha ocurrido un error!");
 
         }
-
-
-        for (Usuario usu : usuarios) {
-            
-            if (usu.getUsuario().equals(usuario) && usu.getContrasena().equals(contrasena)) {
-                usuarioIngreso = usu;
-
-                return true;
-
-            } else if (usu.getUsuario().equals(usuario) || usu.getContrasena().equals(contrasena)) {
-                if (usu.getUsuario().equals(usuario)) {
-                    txtContrasena.clear();
-                    Alert alerta = new Alert(AlertType.WARNING);
-                    alerta.setTitle("Contraseña equivocada");
-                    alerta.setHeaderText("Ingrese nuevamente su contraseña");
-                    alerta.showAndWait();
-
-                    return false;
-
-                } else if (contrasena.equals(contrasena)) {
-                    txtUsuario.clear();
-                    Alert alerta = new Alert(AlertType.WARNING);
-                    alerta.setTitle("Usuario equivocado");
-                    alerta.setHeaderText("Ingrese nuevamente su usuario");
-                    alerta.showAndWait();
-
-                    return false;
-
-                }
-            }
-            
-        
-        Alert alerta = new Alert(AlertType.WARNING);
-        alerta.setTitle("Datos incorrectos");
-        alerta.setHeaderText("Ingrese nuevamente sus datos");
-        alerta.showAndWait();
-        txtUsuario.clear();
-        txtContrasena.clear();
-        
-        
     }
-    return false;    
-  }  
   
 }
 

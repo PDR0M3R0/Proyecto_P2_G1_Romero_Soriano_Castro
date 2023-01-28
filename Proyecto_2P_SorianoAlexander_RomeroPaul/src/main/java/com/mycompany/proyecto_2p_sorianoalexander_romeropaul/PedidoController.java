@@ -176,8 +176,10 @@ public class PedidoController implements Initializable {
     
        
     @FXML
-    public void ordenarPor(ActionEvent ae){
+    public int ordenarPor(ActionEvent ae){
+        comboOrden.getItems().clear();
         
+        return 0;
     }
     
     
