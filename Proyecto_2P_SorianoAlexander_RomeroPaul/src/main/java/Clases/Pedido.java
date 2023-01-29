@@ -1,7 +1,7 @@
 
 package Clases;
 
-import static com.mycompany.proyecto_2p_sorianoalexander_romeropaul.IngresoSistemaController.usuarios;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -58,10 +58,13 @@ public class Pedido{
         this.valor = valor;
     }
    
+    //Metodo que me permite calcular el valor por cantidad de producto:
     public double totalCant(){
         double total = this.getCantidad() * this.getValor();
         return total;
       
     }
+    
+    
     
 }

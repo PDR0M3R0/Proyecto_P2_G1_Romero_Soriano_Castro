@@ -1,14 +1,11 @@
 package com.mycompany.proyecto_2p_sorianoalexander_romeropaul;
 
 import Clases.Usuario;
-import static com.mycompany.proyecto_2p_sorianoalexander_romeropaul.Principal.escena;
-import static com.mycompany.proyecto_2p_sorianoalexander_romeropaul.Principal.pathFXML;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,28 +17,38 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+
+
 
 /**
  * FXML Controller class
  *
  * @author pdrb1
  */
+
+
+
 public class IngresoSistemaController implements Initializable {
-    public static ArrayList<Usuario> usuarios = new ArrayList<>();
+    //Listas estaticas donde se alojaran los objetos creados de sus respesctiva lectura de arhivos:
+    public static ArrayList<Usuario> usuarios;
     public static Usuario usuarioIngreso;
+    
+    //Variables necesarias para hacer el cambio de escena:
     private Stage stage;
     private Scene scene;
     
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        leerUsuarios();
-
+        usuarios = leerUsuarios();
+        
+        for(Usuario u: usuarios){
+            System.out.println(u.getUsuario());
+            System.out.println(u.getContrasena());
+        }
     }
     
    
@@ -57,62 +64,63 @@ public class IngresoSistemaController implements Initializable {
     private TextField txtContrasena;
 
     
-    //Metodos del controlador: 
+    //Metodos que invocara a los demas metodos para verificar si el usuario se encuentr registrado para usar la aplicacion:
     @FXML
     public void ingresar(ActionEvent ae) throws IOException {
-        String usuario = txtUsuario.getText();
-        String contrasena = txtContrasena.getText();
-        boolean pase = verificacionUsuario(usuario, contrasena);
-
-        if ( pase == true) {
-            System.out.println("ingreso");
-            cambioVista(ae);
-        } else {
-            System.out.println("No funciona metodo ingresar");
-        }
-    }
-
-    public void cambioVista(ActionEvent ae) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("OpcionesCliente.fxml"));
-        stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public boolean verificacionUsuario(String usuario, String contrasena) {
+        String u = txtUsuario.getText();
+        String c = txtContrasena.getText();
         
-        for (Usuario usu : usuarios) {
-            
-            if (usu.getUsuario().equals(usuario) && usu.getContrasena().equals(contrasena)) {
-                usuarioIngreso = usu;
-                return true;
+        verificacionUsuario(u,c,ae);
+    }
 
-            } else if (usu.getUsuario().equals(usuario) || usu.getContrasena().equals(contrasena)) {
-                txtUsuario.setText("");  
-                txtContrasena.setText("");
+    
+    
+    //Este metodo que se usar para la validacion del usuario y apertura de la nueva escena:
+    public void verificacionUsuario(String u, String c,ActionEvent ae) {
+        for(Usuario usu:usuarios){
+            
+            if ((usu.getUsuario().equals(u) == true) && (usu.getContrasena().equals(c) == true)){
+                //Esta variable nos permitira usar el nombre del cliente en otros metodos por ende se lo guarda en esta variable
+                usuarioIngreso = usu;
                 
+                try {
+                    cambioVista(ae);
+                    
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    
+                }
+
+            }else if ((usu.getUsuario().equals(u) == true) && (usu.getContrasena().equals(c) == false)){
+                txtContrasena.setText("");
+
                 Alert alerta = new Alert(AlertType.WARNING);
                 alerta.setTitle("Intentelo nuevamente!");
-                alerta.setHeaderText("Los datos ingresados son incorrectos");
+                alerta.setHeaderText("Su contrasena es incorrecta!");
                 alerta.showAndWait();
-                
-                return false;
-                 
-                    
+
+            }else if ((usu.getUsuario().equals(u) == false) && (usu.getContrasena().equals(c) == true)){
+                txtUsuario.setText("");
+
+                Alert alerta = new Alert(AlertType.WARNING);
+                alerta.setTitle("Intentelo nuevamente!");
+                alerta.setHeaderText("El usuario no esta registrado!");
+                alerta.showAndWait();
+
             }
-    }
-    return false;    
-  }  
+        }    
+    }  
     
-    public void leerUsuarios(){
-        ArrayList<String[]> parametros = new ArrayList<>();
-        
-        try ( BufferedReader br = new BufferedReader(new FileReader("Usuarios.txt"))) {
+    
+    
+    //Este metodo se encarga de devolver una lista de usuarios ara su posterior verificacion:
+    public ArrayList<Usuario> leerUsuarios(){
+        ArrayList<Usuario> usuarioslistas = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("Usuarios.txt"))) {
             String linea;
 
             while ((linea = br.readLine()) != null) {
-                
                 String[] pr = linea.split(",");
                 
                 String u = pr[0];
@@ -120,15 +128,32 @@ public class IngresoSistemaController implements Initializable {
                 String nombreApellidos = pr[2];
                 
                 Usuario uu = new Usuario(u,c,nombreApellidos);
-                usuarios.add(uu);
-                
+                System.out.println(uu);
+                usuarioslistas.add(uu);
+
             }
 
         } catch (IOException ioe) {
             System.out.println("Ha ocurrido un error!");
 
         }
+        return usuarioslistas;
+        
     }
-  
+    
+    
+    
+    //Este metodo permite cambiar de escena conservando la misma ventana:
+    public void cambioVista(ActionEvent ae) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("OpcionesCliente.fxml"));
+        stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        
+    }
+
+    
+    
 }
 
