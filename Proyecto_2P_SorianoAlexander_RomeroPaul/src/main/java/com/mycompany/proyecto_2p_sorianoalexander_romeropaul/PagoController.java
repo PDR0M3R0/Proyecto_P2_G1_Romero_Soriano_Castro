@@ -147,7 +147,7 @@ public class PagoController implements Initializable {
 
         vBoxInteractive.getChildren().add(gridpane);
         Text texto = new Text();
-        texto.setText("\nTendrá que pagar un total de " + totalUsuario + " dólares por el incremento del 5% por uso de la tarjeta");
+        texto.setText("\nTendrá que pagar un total de " + nuevoTotal + " dólares por el incremento del 5% por uso de la tarjeta");
         vBoxInteractive.getChildren().add(texto);
         
         
