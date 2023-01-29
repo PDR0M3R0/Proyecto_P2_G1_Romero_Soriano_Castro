@@ -9,15 +9,24 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
@@ -25,6 +34,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -36,6 +46,8 @@ public class LocalesMapaController implements Initializable {
     private ArrayList<Local> local;
     private ImageView imgv;
     private DialogPane dialog;
+    private Stage stage;
+    private Scene scene;
 
     @FXML
     private Pane rootPane;
@@ -50,6 +62,31 @@ public class LocalesMapaController implements Initializable {
 
         rootPane.getChildren().clear();
         imgv = null;
+        Button bt = new Button("Salir");
+        rootPane.getChildren().add(bt);
+        bt.setLayoutX(410);
+        bt.setLayoutY(450);
+        bt.setOnAction(e -> {
+            ButtonType menu = new ButtonType("Menú");
+            ButtonType salir = new ButtonType("Salir");
+            ButtonType cancelar = new ButtonType("Cancelar");
+            Alert alerta = new Alert(AlertType.CONFIRMATION, "Elija una opcion", menu, salir, cancelar);
+            alerta.setHeaderText("Esta segur@ que quiere salir?");
+            Optional<ButtonType> opciones = alerta.showAndWait();
+            if (opciones.get() == menu) {
+                try {
+                    Parent root = FXMLLoader.load(getClass().getResource("OpcionesCliente.fxml"));
+                    stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+                    scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException ex){
+                }
+            } else if (opciones.get() == salir) {
+                stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+                stage.close();
+            }
+        });
 
         Thread t = new Thread(new Runnable() {
             public void run() {
@@ -85,12 +122,12 @@ public class LocalesMapaController implements Initializable {
                             imgv.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                 public void handle(MouseEvent e) {
                                     Alert al = new Alert(AlertType.INFORMATION);
-                                   
+
                                     al.setHeaderText(nombre + "\n" + direccion + "\n" + horario);
                                     dialog = al.getDialogPane();
                                     String cssLayout = "-fx-background-color: #ffe4e1; -fx-font-size: 15px;";
                                     dialog.setStyle(cssLayout);
-                                    
+
                                     Thread t2 = new Thread(new Runnable() {
                                         @Override
                                         public void run() {

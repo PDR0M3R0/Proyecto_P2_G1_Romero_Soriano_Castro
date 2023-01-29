@@ -225,6 +225,7 @@
          <children>
             <Button fx:id="btnContinuar" mnemonicParsing="false" onAction="#continuar" style="-fx-background-color: #f7cb5d;" text="Continuar" />
             <Button fx:id="btnLimpiar" mnemonicParsing="false" onAction="#limpiar" style="-fx-background-color: #f7cb5d;" text="Limpiar" />
+            <Button fx:id="btnSalir" mnemonicParsing="false" onAction="#Salir" style="-fx-background-color: #f7cb5d;" text="Salir" />
          </children>
       </HBox>
    </children>

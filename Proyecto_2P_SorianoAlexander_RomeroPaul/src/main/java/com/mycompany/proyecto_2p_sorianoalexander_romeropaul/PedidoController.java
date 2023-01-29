@@ -17,6 +17,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +25,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -38,26 +40,27 @@ import javafx.stage.Stage;
  *
  * @author pdrb1
  */
-public class PedidoController implements Initializable {    
+public class PedidoController implements Initializable {
+
     static ArrayList<Menu> menulista = new ArrayList<>();
     static ArrayList<Pedido> pedidolista = new ArrayList<>();
     private Stage stage;
     private Scene scene;
     public static String totalUsuario;
+
     /**
      * Initializes the controller class.
      */
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         menulista = leerMenu();
-        comboTipo.getItems().addAll("Platos Fuertes","Postres","Piqueos","Bebidas");
-        comboOrden.getItems().addAll("Precio","Nombre");
-        
-        
-    }    
-    
+        comboTipo.getItems().addAll("Platos Fuertes", "Postres", "Piqueos", "Bebidas");
+        comboOrden.getItems().addAll("Precio", "Nombre");
+
+    }
+
     @FXML
     private ComboBox<String> comboTipo;
     @FXML
@@ -82,62 +85,84 @@ public class PedidoController implements Initializable {
     private HBox htotal;
     @FXML
     private HBox hiva;
-            
-    
+
     @FXML
-    public void limpiar(ActionEvent ae){
+    private Button btnSalir;
+
+    @FXML
+    void Salir(ActionEvent event) {
+        ButtonType menu = new ButtonType("Menú");
+        ButtonType salir = new ButtonType("Salir");
+        ButtonType cancelar = new ButtonType("Cancelar");
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION, "Elija una opcion", menu, salir, cancelar);
+        alerta.setHeaderText("Esta segur@ que quiere salir?");
+        Optional<ButtonType> opciones = alerta.showAndWait();
+        if (opciones.get() == menu) {
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("OpcionesCliente.fxml"));
+                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException ex) {
+            }
+        } else if (opciones.get() == salir) {
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.close();
+        }
+    }
+
+    @FXML
+    public void limpiar(ActionEvent ae) {
         gridOpciones.getChildren().clear();
         gridPedido.getChildren().clear();
         pedidolista.clear();
-        
-        
+
     }
-    
-    
+
     @FXML
-    public void continuar(ActionEvent ae) throws IOException{
+    public void continuar(ActionEvent ae) throws IOException {
         //aqui se debe registrar el pedido
         registrarPedido(pedidolista);
-        
+
         Parent root = FXMLLoader.load(getClass().getResource("Pago.fxml"));
         stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        
+
     }
-    
-    
+
     @FXML
-    public void elegirTipo(ActionEvent ae){
+    public void elegirTipo(ActionEvent ae) {
         String opcion = comboTipo.getValue();
-      
-            if(opcion.equals("Platos Fuertes")){
-                String tipo = "F";
-                mostrarEnGridPane(tipo);
 
-            }else if(opcion.equals("Piqueos")){
-                String tipo = "Q";
-                mostrarEnGridPane(tipo);
+        if (opcion.equals("Platos Fuertes")) {
+            String tipo = "F";
+            mostrarEnGridPane(tipo);
 
-            }else if(opcion.equals("Postres")){          
-                String tipo = "P";
-                mostrarEnGridPane(tipo);
+        } else if (opcion.equals("Piqueos")) {
+            String tipo = "Q";
+            mostrarEnGridPane(tipo);
 
-            }else if(opcion.equals("Bebidas")){
-                String tipo = "B";
-                mostrarEnGridPane(tipo);  
-            }  
-        
+        } else if (opcion.equals("Postres")) {
+            String tipo = "P";
+            mostrarEnGridPane(tipo);
+
+        } else if (opcion.equals("Bebidas")) {
+            String tipo = "B";
+            mostrarEnGridPane(tipo);
+        }
+
     }
-    
+
     //Aqui te muestra en el mimso gridOpciones 
-    public void mostrarEnGridPane(String tipo){
+    public void mostrarEnGridPane(String tipo) {
         gridOpciones.getChildren().clear();
-        for(int i=0;i<menulista.size();i++){
+        for (int i = 0; i < menulista.size(); i++) {
             Menu m = menulista.get(i);
-            
-            if(menulista.get(i).getTipo().equals(tipo)){                
+
+            if (menulista.get(i).getTipo().equals(tipo)) {
                 //HBox seccDescripcion = new HBox();
                 Label lbldescripcion = new Label(m.getDescripcion());
                 //seccDescripcion.getChildren().add(lbldescripcion);
@@ -153,112 +178,105 @@ public class PedidoController implements Initializable {
                 //HBox seccAgre = new HBox();
                 Button btnEscoger = new Button("Agregar");
                 //seccDescripcion.getChildren().add(btnEscoger);
-                
-               btnEscoger.setOnMouseClicked(new EventHandler<MouseEvent>(){
-                   
+
+                btnEscoger.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
                     @Override
                     public void handle(MouseEvent t) {
-                        Pedido p = new Pedido(m.getDescripcion(),usuarioIngreso.getNombreApellido(),Integer.parseInt(cant.getText()),m.getPrecio());
+                        Pedido p = new Pedido(m.getDescripcion(), usuarioIngreso.getNombreApellido(), Integer.parseInt(cant.getText()), m.getPrecio());
                         pedidolista.add(p);
                         mostrarPedidos();
-                        
-                        
-                        
+
                     }
-                   
-               });
-                
+
+                });
+
                 //Para anadir 4 columnas
-                GridPane.setConstraints(lbldescripcion,0,i+1);
-                GridPane.setConstraints(lblprecio,1,i+1);
-                GridPane.setConstraints(cant,2,i+1);
-                GridPane.setConstraints(btnEscoger,3,i+1);
-                
-                gridOpciones.getChildren().addAll(lbldescripcion,lblprecio,cant,btnEscoger);
-                
-                    
-                
-            }                
+                GridPane.setConstraints(lbldescripcion, 0, i + 1);
+                GridPane.setConstraints(lblprecio, 1, i + 1);
+                GridPane.setConstraints(cant, 2, i + 1);
+                GridPane.setConstraints(btnEscoger, 3, i + 1);
+
+                gridOpciones.getChildren().addAll(lbldescripcion, lblprecio, cant, btnEscoger);
+
+            }
         }
     }
-    
-       
+
     @FXML
-    public int ordenarPor(ActionEvent ae){
+    public int ordenarPor(ActionEvent ae) {
         comboOrden.getItems().clear();
-        
+
         return 0;
     }
-    
-    
-    public ArrayList<Menu> leerMenu(){
+
+    public ArrayList<Menu> leerMenu() {
         ArrayList<Menu> menulista = new ArrayList<>();
-        
-        try(BufferedReader br = new BufferedReader(new FileReader("menu.txt"))){
-           String linea;
-           linea = br.readLine();//salto de linea
-           
-           while((linea = br.readLine()) != null){
-               String[] parametros = linea.split(",");
-               
-               Menu menu = new Menu(parametros[0],Double.parseDouble(parametros[1]),parametros[2]);
-               menulista.add(menu);
-           }
-            
-        }catch(IOException ioe){
+
+        try ( BufferedReader br = new BufferedReader(new FileReader("menu.txt"))) {
+            String linea;
+            linea = br.readLine();//salto de linea
+
+            while ((linea = br.readLine()) != null) {
+                String[] parametros = linea.split(",");
+
+                Menu menu = new Menu(parametros[0], Double.parseDouble(parametros[1]), parametros[2]);
+                menulista.add(menu);
+            }
+
+        } catch (IOException ioe) {
             System.out.println("No se ha podido ingresar al documento menu");
-        }     
-        
+        }
+
         return menulista;
     }
-    
-    public void mostrarPedidos(){
-        
+
+    public void mostrarPedidos() {
+
         double total = 0.0;
-        
-        for(int i = 0;i<pedidolista.size();i++){
-            Label lbldesc = new Label(pedidolista.get(i).getDescripcion()); 
+
+        for (int i = 0; i < pedidolista.size(); i++) {
+            Label lbldesc = new Label(pedidolista.get(i).getDescripcion());
             Label lblcant = new Label(String.valueOf(pedidolista.get(i).getCantidad()));
             Label lblpre = new Label(String.valueOf(pedidolista.get(i).totalCant()));
 
-            GridPane.setConstraints(lbldesc,0,i);
-            GridPane.setConstraints(lblcant,1,i);
-            GridPane.setConstraints(lblpre,2,i);
+            GridPane.setConstraints(lbldesc, 0, i);
+            GridPane.setConstraints(lblcant, 1, i);
+            GridPane.setConstraints(lblpre, 2, i);
 
-            gridPedido.getChildren().addAll(lbldesc,lblpre,lblcant);
-        }    
+            gridPedido.getChildren().addAll(lbldesc, lblpre, lblcant);
+        }
 
-        for(int j = 0;j<pedidolista.size();j++){
+        for (int j = 0; j < pedidolista.size(); j++) {
             double suma = pedidolista.get(j).totalCant();
             total += suma;
 
-
-            double subtotalIVA = total + (total*0.14);
+            double subtotalIVA = total + (total * 0.14);
             lblSubtotal.setText(String.valueOf(total));
             lblIVA.setText("12%");
             lblTotal.setText(String.valueOf(subtotalIVA));
             totalUsuario = String.valueOf(subtotalIVA);
 
         }
-        
+
     }
-    
+
     // Metodo para crear Archivo de pedido formato(idPedido - nombre Cliente - Total)
-    public void registrarPedido(ArrayList<Pedido> listaPedido){
+    public void registrarPedido(ArrayList<Pedido> listaPedido) {
         double valor = 0.0;
-        
-        for(Pedido p:listaPedido){           
+
+        for (Pedido p : listaPedido) {
             valor += p.getValor();
         }
-        
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter("Pedidos.txt"))){
-            for(Pedido p:listaPedido){
+
+        try ( BufferedWriter bw = new BufferedWriter(new FileWriter("Pedidos.txt"))) {
+            for (Pedido p : listaPedido) {
                 bw.write(p.getDescripcion() + "," + p.getNombreCliente() + "," + valor);
             }
-            
-        }catch(IOException ioe){
+
+        } catch (IOException ioe) {
             System.out.println("Se ha registrado un error al registrar el pedido!");
-            
+
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Error de Registro");
             alerta.setHeaderText("No ha sido posible registrar este pedido");
@@ -266,8 +284,5 @@ public class PedidoController implements Initializable {
 
         }
     }
-    
-    
-    
-    
+
 }
