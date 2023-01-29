@@ -22,7 +22,8 @@ import javafx.stage.WindowEvent;
  *
  * @author Usuario
  */
-public class MuchasGraciasController implements Initializable{
+public class MuchasGraciasController implements Initializable {
+
     private Stage stage;
     private Scene scene;
     @FXML
@@ -38,30 +39,59 @@ public class MuchasGraciasController implements Initializable{
         // TODO
         texto.setText("Su pedido Nro.... ha sido pagado y ahora empezaremos a prepararlo.\nEn aproximadamente 30 minutos llegará a su destino.\nGracias por preferirnos.");
         hiloCerrar();
-    }    
-    
-    void hiloCerrar(){
+        cerrar();
+    }
+
+    void hiloCerrar() {
         Thread t2 = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            for (int i = 5; i >= 0; i--) {
-                String finish = "La ventana se cerrara en " + i + " segundos";
+            @Override
+            public void run() {
+                for (int i = 5; i >= 0; i--) {
+                    String finish = "La ventana se cerrara en " + i + " segundos";
 
-                try {
-                    Thread.sleep(1000);
-                   } catch (InterruptedException ex) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
 
-                   }Platform.runLater(new Runnable() {
+                    }
+                    Platform.runLater(new Runnable() {
 
                         @Override
                         public void run() {
-                        cerrando.setText(finish);
+                            cerrando.setText(finish);
                         }
-                          });
-                             }
-                              }
-                               });
-                        t2.setDaemon(true);
-                        t2.start();
+                    });
+                }
+            }
+        });
+        t2.setDaemon(true);
+        t2.start();
+
+    }
+
+    void cerrar() {
+        Thread t3 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                
+                 try {
+                        Thread.sleep(6100);
+                    } catch (InterruptedException ex) {
+
+                    }
+                Platform.runLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        Stage stage = (Stage) texto.getScene().getWindow();
+                        stage.close();
+                    }
+                });
+
+            }
+        });
+        t3.setDaemon(true);
+        t3.start();
+
     }
 }
