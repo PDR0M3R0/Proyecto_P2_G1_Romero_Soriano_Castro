@@ -62,10 +62,14 @@ public class LocalesMapaController implements Initializable {
 
         rootPane.getChildren().clear();
         imgv = null;
+        // Se crea un Boton con programacion dinamica para usarlo para volver al menu
+        // o salir del programa
         Button bt = new Button("Salir");
         rootPane.getChildren().add(bt);
+        //Posicionamiento absoluto
         bt.setLayoutX(410);
         bt.setLayoutY(450);
+        //creacion de setonaction para que al apretar el boton salga el alert
         bt.setOnAction(e -> {
             ButtonType menu = new ButtonType("Menú");
             ButtonType salir = new ButtonType("Salir");
@@ -80,18 +84,19 @@ public class LocalesMapaController implements Initializable {
                     scene = new Scene(root);
                     stage.setScene(scene);
                     stage.show();
-                } catch (IOException ex){
+                } catch (IOException ex) {
                 }
             } else if (opciones.get() == salir) {
                 stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
                 stage.close();
             }
         });
-
+        //uso de threads para los iconos en el mapa
         Thread t = new Thread(new Runnable() {
             public void run() {
-
+                // Se recorre listas para conseguir el valor en X / Y de los iconos
                 for (Local loc : local) {
+                    //Random para que salga cada uno entre 0 y 10 seg
                     Random r = new Random();
                     int n = r.nextInt(11);
                     try {
@@ -119,6 +124,7 @@ public class LocalesMapaController implements Initializable {
                             String horario = loc.getHorario();
 
                             rootPane.getChildren().add(imgv);
+                            //creacion de evento al hacer click el icono para que salga la informacion de los locales
                             imgv.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                 public void handle(MouseEvent e) {
                                     Alert al = new Alert(AlertType.INFORMATION);
@@ -127,7 +133,7 @@ public class LocalesMapaController implements Initializable {
                                     dialog = al.getDialogPane();
                                     String cssLayout = "-fx-background-color: #ffe4e1; -fx-font-size: 15px;";
                                     dialog.setStyle(cssLayout);
-
+                                    // nuevo thread para que la alerta se cierre en 5 seg
                                     Thread t2 = new Thread(new Runnable() {
                                         @Override
                                         public void run() {
