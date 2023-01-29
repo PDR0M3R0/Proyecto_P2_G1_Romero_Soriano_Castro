@@ -7,6 +7,7 @@ package Clases;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 /**
@@ -71,7 +72,7 @@ public class Local {
     }
 
     public static ArrayList<Local> leerLocales() {
-        try ( BufferedReader bfr = new BufferedReader(new FileReader("Locales.txt"))) {
+        try ( BufferedReader bfr = new BufferedReader(new FileReader("Locales.txt",StandardCharsets.UTF_8))) {
             ArrayList<Local> local = new ArrayList<>();
             String linea= bfr.readLine();
             while (linea != null) {

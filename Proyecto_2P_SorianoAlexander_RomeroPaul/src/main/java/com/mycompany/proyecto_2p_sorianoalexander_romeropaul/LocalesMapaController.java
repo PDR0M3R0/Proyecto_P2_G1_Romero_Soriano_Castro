@@ -15,8 +15,11 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -32,6 +35,7 @@ public class LocalesMapaController implements Initializable {
 
     private ArrayList<Local> local;
     private ImageView imgv;
+    private DialogPane dialog;
 
     @FXML
     private Pane rootPane;
@@ -73,7 +77,7 @@ public class LocalesMapaController implements Initializable {
 
                             }
 
-                            String name = loc.getNombre();
+                            String nombre = loc.getNombre();
                             String direccion = loc.getDireccion();
                             String horario = loc.getHorario();
 
@@ -81,7 +85,12 @@ public class LocalesMapaController implements Initializable {
                             imgv.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                 public void handle(MouseEvent e) {
                                     Alert al = new Alert(AlertType.INFORMATION);
-
+                                   
+                                    al.setHeaderText(nombre + "\n" + direccion + "\n" + horario);
+                                    dialog = al.getDialogPane();
+                                    String cssLayout = "-fx-background-color: #ffe4e1; -fx-font-size: 15px;";
+                                    dialog.setStyle(cssLayout);
+                                    
                                     Thread t2 = new Thread(new Runnable() {
                                         @Override
                                         public void run() {
