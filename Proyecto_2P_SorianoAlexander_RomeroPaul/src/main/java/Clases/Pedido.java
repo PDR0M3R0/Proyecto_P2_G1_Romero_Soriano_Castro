@@ -5,6 +5,7 @@ package Clases;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import javafx.scene.control.Alert;
 
@@ -12,7 +13,7 @@ import javafx.scene.control.Alert;
  *
  * @author axsl3
  */
-public class Pedido{
+public class Pedido implements Serializable{
     private String descripcion;  //id del pedido 
     private String nombreCliente;
     private int cantidad;

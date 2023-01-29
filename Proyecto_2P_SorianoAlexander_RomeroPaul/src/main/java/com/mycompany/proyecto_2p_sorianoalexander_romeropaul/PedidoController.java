@@ -13,9 +13,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.GridPane;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,6 +55,7 @@ public class PedidoController implements Initializable {
     
     //Variable donde se guardar el nombre del usuario que ha ingresado:
     public static double totalUsuario;
+    
   
     //Variables de la escena a utilizar:
     @FXML
@@ -135,6 +139,11 @@ public class PedidoController implements Initializable {
         gridOpciones.getChildren().clear();
         gridPedido.getChildren().clear();
         pedidolista.clear();
+        
+        lblTotal.setText("0.0");
+        lblSubtotal.setText("0.0");
+        
+        
 
     }
 
@@ -369,26 +378,27 @@ public class PedidoController implements Initializable {
     
     
     // Metodo para crear Archivo de pedido formato(idPedido - nombre Cliente - Total):
-    public void registrarPedido(ArrayList<Pedido> listaPedido) {
+    public void registrarPedido(ArrayList<Pedido> pedidolista) {
         double valor = 0.0;
 
-        for (Pedido p : listaPedido) {
-            valor += p.getValor();
+        for(Pedido p:pedidolista){
+          valor += p.totalCant();
+          
         }
 
-        try ( BufferedWriter bw = new BufferedWriter(new FileWriter("Pedidos.txt"))) {
-            for (Pedido p : listaPedido) {
-                bw.write(p.getDescripcion() + "," + p.getNombreCliente() + "," + valor);
-            }
+        try(ObjectOutputStream obj = new ObjectOutputStream(new FileOutputStream("Pedidos_Serializados"))){
+          obj.writeObject(pedidolista);
 
-        } catch (IOException ioe) {
-            System.out.println("Se ha registrado un error al registrar el pedido!");
+        }catch(Exception ee){
+          System.out.println("Ha ocurrido un problema con la serializacion");
+          ee.printStackTrace();
 
-            Alert alerta = new Alert(Alert.AlertType.ERROR);
-            alerta.setTitle("Error de Registro");
-            alerta.setHeaderText("No ha sido posible registrar este pedido");
-            alerta.showAndWait();
+          Alert alerta = new Alert(Alert.AlertType.ERROR);
+          alerta.setTitle("Error de Registro");
+          alerta.setHeaderText("No ha sido posible registrar este pedido");
+          alerta.showAndWait();  
 
-        }
+             
+        } 
     }
 }
