@@ -3,6 +3,7 @@ package com.mycompany.proyecto_2p_sorianoalexander_romeropaul;
 import static com.mycompany.proyecto_2p_sorianoalexander_romeropaul.PedidoController.totalUsuario;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -33,12 +34,10 @@ import javafx.stage.Stage;
  * @author Usuario
  */
 public class PagoController implements Initializable {
-
     private Stage stage;
     private Scene scene;
 
-    @FXML
-    private ToggleGroup grupo;
+    
 
     /**
      * Initializes the controller class.
@@ -48,6 +47,9 @@ public class PagoController implements Initializable {
         //hola
     }
 
+    @FXML
+    private ToggleGroup grupo;
+    
     @FXML
     private Button btnContinuar;
 
@@ -110,14 +112,14 @@ public class PagoController implements Initializable {
         vBoxInteractive.getChildren().clear();
         vBoxInteractive.setAlignment(Pos.CENTER_LEFT);
         Text texto = new Text();
-        texto.setText("Tendrá que pagar un total de " + totalUsuario + " dólares.\nAsegúrese de tener el dinero completo por si el repartidor no tiene cambio.");
+        texto.setText("Tendrá que pagar un total de " + String.valueOf(totalUsuario) + " dólares.\nAsegúrese de tener el dinero completo por si el repartidor no tiene cambio.");
         vBoxInteractive.getChildren().add(texto);
     }
 
     @FXML
     private void selecTarjeta(ActionEvent event) {
-        double nuevoTotal = (double) (Double.parseDouble(totalUsuario) + Double.parseDouble(totalUsuario) * 0.05);
-        totalUsuario = String.format("%.2f", nuevoTotal);
+        double nuevoTotal = (totalUsuario + (totalUsuario * 0.05));
+                
         vBoxInteractive.getChildren().clear();
         vBoxInteractive.setAlignment(Pos.TOP_LEFT);
         GridPane gridpane = new GridPane();
@@ -148,9 +150,10 @@ public class PagoController implements Initializable {
         texto.setText("\nTendrá que pagar un total de " + totalUsuario + " dólares por el incremento del 5% por uso de la tarjeta");
         vBoxInteractive.getChildren().add(texto);
         
-        double totalAnterior = (double) (Double.parseDouble(totalUsuario) - Double.parseDouble(totalUsuario) * 0.05);
-        totalUsuario = String.format("%.2f", totalAnterior);
+        
 
     }
+    
+    
 
 }

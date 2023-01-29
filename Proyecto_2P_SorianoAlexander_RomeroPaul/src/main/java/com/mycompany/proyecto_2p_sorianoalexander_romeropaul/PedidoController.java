@@ -51,7 +51,7 @@ public class PedidoController implements Initializable {
     private Scene scene;
     
     //Variable donde se guardar el nombre del usuario que ha ingresado:
-    public static String totalUsuario;
+    public static double totalUsuario;
   
     //Variables de la escena a utilizar:
     @FXML
@@ -355,13 +355,13 @@ public class PedidoController implements Initializable {
 
         for (int j = 0; j < pedidolista.size(); j++) {
             double suma = pedidolista.get(j).totalCant();
-            total += suma;
+            total += (double)Math.round(suma*100.0)/100.0;
 
             double subtotalIVA = total + (total * 0.14);
             lblSubtotal.setText(String.valueOf(total));
             lblIVA.setText("12%");
             lblTotal.setText(String.valueOf(subtotalIVA));
-            totalUsuario = String.format("%.2f", subtotalIVA);
+            totalUsuario = subtotalIVA;
 
         }
     }
