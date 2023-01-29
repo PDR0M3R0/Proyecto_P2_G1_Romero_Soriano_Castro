@@ -361,7 +361,7 @@ public class PedidoController implements Initializable {
             lblSubtotal.setText(String.valueOf(total));
             lblIVA.setText("12%");
             lblTotal.setText(String.valueOf(subtotalIVA));
-            totalUsuario = String.valueOf(subtotalIVA);
+            totalUsuario = String.format("%.2f", subtotalIVA);
 
         }
     }

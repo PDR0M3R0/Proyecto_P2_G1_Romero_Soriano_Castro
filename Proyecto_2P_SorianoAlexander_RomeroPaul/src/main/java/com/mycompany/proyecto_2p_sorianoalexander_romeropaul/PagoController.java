@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -116,7 +117,7 @@ public class PagoController implements Initializable {
     @FXML
     private void selecTarjeta(ActionEvent event) {
         double nuevoTotal = (double) (Double.parseDouble(totalUsuario) + Double.parseDouble(totalUsuario) * 0.05);
-        totalUsuario = String.valueOf(nuevoTotal);
+        totalUsuario = String.format("%.2f", nuevoTotal);
         vBoxInteractive.getChildren().clear();
         vBoxInteractive.setAlignment(Pos.TOP_LEFT);
         GridPane gridpane = new GridPane();
@@ -125,6 +126,7 @@ public class PagoController implements Initializable {
         Label caducidad = new Label("Caducidad:");
         Label cvv = new Label("CVV:");
         TextField t1 = new TextField();
+        t1.setPrefWidth(300);
         TextField t2 = new TextField();
         TextField t3 = new TextField();
         TextField t4 = new TextField();
@@ -139,11 +141,15 @@ public class PagoController implements Initializable {
         GridPane.setConstraints(t4, 1, 3);
 
         gridpane.getChildren().addAll(titular, numero, caducidad, cvv, t1, t2, t3, t4);
+        
 
         vBoxInteractive.getChildren().add(gridpane);
         Text texto = new Text();
         texto.setText("\nTendrá que pagar un total de " + totalUsuario + " dólares por el incremento del 5% por uso de la tarjeta");
         vBoxInteractive.getChildren().add(texto);
+        
+        double totalAnterior = (double) (Double.parseDouble(totalUsuario) - Double.parseDouble(totalUsuario) * 0.05);
+        totalUsuario = String.format("%.2f", totalAnterior);
 
     }
 

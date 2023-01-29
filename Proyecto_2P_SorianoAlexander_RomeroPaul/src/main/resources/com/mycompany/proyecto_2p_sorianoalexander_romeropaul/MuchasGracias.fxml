@@ -8,7 +8,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.proyecto_2p_sorianoalexander_romeropaul.MuchasGraciasController">
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -27,7 +26,10 @@
       </Label>
       <VBox alignment="CENTER" prefHeight="174.0" prefWidth="660.0">
          <children>
-            <Text fx:id="texto" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1.0" />
+            <Text fx:id="texto" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="554.5999388694763">
+               <font>
+                  <Font size="16.0" />
+               </font></Text>
          </children>
       </VBox>
       <ImageView fitHeight="207.0" fitWidth="196.0" pickOnBounds="true" preserveRatio="true">
@@ -35,5 +37,10 @@
             <Image url="@../../../Imagenes/repartidor.png" />
          </image>
       </ImageView>
+      <VBox alignment="BOTTOM_RIGHT" prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Label fx:id="cerrando" alignment="CENTER" />
+         </children>
+      </VBox>
    </children>
 </VBox>
