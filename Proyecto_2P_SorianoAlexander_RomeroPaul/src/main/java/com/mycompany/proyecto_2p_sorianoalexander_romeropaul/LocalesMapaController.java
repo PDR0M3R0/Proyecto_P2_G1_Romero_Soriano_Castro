@@ -40,6 +40,8 @@ import javafx.stage.Stage;
  * FXML Controller class
  *
  * @author axsl3
+ *
+ *
  */
 public class LocalesMapaController implements Initializable {
 
@@ -57,8 +59,20 @@ public class LocalesMapaController implements Initializable {
         local = Local.leerLocales();
         agregarImgview();
     }
-
+/**
+ * FXML Controller class
+ * Este metodo se encarga de crear un boton con programacion dinamica y de incluir los pines en el mapa con su respectivos threads
+ * @param rootPane Es el root donde ajustaremos el mapa
+ * @param bt Un Boton creado con programacion dinamica que sirve para salir y volver al menu
+ * @param alerta El alert que va a mostrar las opciones salir/menu/cancelar
+ * @param imgv Es el imageview que va a contener las imagenes para señalar las locaciones
+ * @param t Este thread se encarga generar un numero entre 0 y 10 seg para colocar los pines en ese tiempo
+ * @param t2 Este thread se encarga de cerrar despues de 5 segundos el alert utilizado en el setOnMouseClick 
+ *
+ *
+ */
     void agregarImgview() {
+       
 
         rootPane.getChildren().clear();
         imgv = null;
