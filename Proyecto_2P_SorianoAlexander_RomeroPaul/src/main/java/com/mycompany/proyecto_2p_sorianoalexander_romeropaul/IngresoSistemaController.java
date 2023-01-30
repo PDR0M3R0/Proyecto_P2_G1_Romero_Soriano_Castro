@@ -24,9 +24,9 @@ import javafx.stage.Stage;
 
 
 /**
- * FXML Controller class
- *
+ * FXML Controller class -- Esta clase se encarga de gestionar el ingreso dentro de la aplicacion
  * @author pdrb1
+ * 
  */
 
 
@@ -64,7 +64,12 @@ public class IngresoSistemaController implements Initializable {
     private TextField txtContrasena;
 
     
-    //Metodos que invocara a los demas metodos para verificar si el usuario se encuentr registrado para usar la aplicacion:
+    
+    /**
+     * Metodos que invocara a los demas metodos para verificar si el usuario se encuentr registrado para usar la aplicacion
+     * @param ae Evento atrapado por la accion de un boton con este metodo
+     * 
+    **/
     @FXML
     public void ingresar(ActionEvent ae) throws IOException {
         String u = txtUsuario.getText();
@@ -72,10 +77,15 @@ public class IngresoSistemaController implements Initializable {
         
         verificacionUsuario(u,c,ae);
     }
-
     
     
-    //Este metodo que se usar para la validacion del usuario y apertura de la nueva escena:
+    /**
+      *Este metodo que se usar para la validacion del usuario y apertura de la nueva escena
+      * @param u String se recibe el usuario que ha ingresado en el textfiled
+      * @param c String se recibe la contrasena que ha ingresado en el textfield
+      * @param ae ActionEvent se recibe del metodo ingresar para usarlo en el metodo cambiovista()
+      * 
+    **/
     public void verificacionUsuario(String u, String c,ActionEvent ae) {
         for(Usuario usu:usuarios){
             
@@ -112,8 +122,11 @@ public class IngresoSistemaController implements Initializable {
     }  
     
     
-    
-    //Este metodo se encarga de devolver una lista de usuarios ara su posterior verificacion:
+    /**
+    *Este metodo se encarga de devolver una lista de usuarios ara su posterior verificacion:
+    *@return Un ArrayList del tipo Usuario que servira para setearlas en la lista de menu estatica
+    * 
+    **/ 
     public ArrayList<Usuario> leerUsuarios(){
         ArrayList<Usuario> usuarioslistas = new ArrayList<>();
 
@@ -142,8 +155,11 @@ public class IngresoSistemaController implements Initializable {
     }
     
     
-    
-    //Este metodo permite cambiar de escena conservando la misma ventana:
+    /**
+    *Este metodo permite cambiar de escena conservando la misma ventana:
+    * @param ae que recibe tras apuchar el boton de ingreso
+    * 
+    **/
     public void cambioVista(ActionEvent ae) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("OpcionesCliente.fxml"));
         stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();

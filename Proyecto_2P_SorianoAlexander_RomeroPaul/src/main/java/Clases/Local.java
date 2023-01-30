@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Clases;
 
 import java.io.BufferedReader;
@@ -11,17 +7,40 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 /**
- *
- * @author axsl3
+ *  Representa una sucursal del negocio.
  */
 public class Local {
-
+    
+    /**
+     * Representa el identificador del local.
+     */
     String nombre;
+    /**
+     * Representa la ubicacion general del local.
+     */
     String direccion;
+    /**
+     * Representa el horario de atencion del local.
+     */
     String horario;
+    /**
+     * Representa la ubicacion del local con coordenadas en el mapa.
+     */
     double coordenadaX;
+    /**
+     * Representa la ubicacion del local con coordenadas en el mapa.
+     */
     double coordenadaY;
-
+    
+    /**
+     * Crea una instancia de la clase Local.
+     * @param nombre
+     * @param direccion
+     * @param horario
+     * @param coordenadaX
+     * @param coordenadaY 
+     */
+    
     public Local(String nombre, String direccion, String horario, double coordenadaX, double coordenadaY) {
         this.nombre = nombre;
         this.direccion = direccion;
@@ -71,6 +90,10 @@ public class Local {
         this.coordenadaY = coordenadaY;
     }
 
+    /**
+     * Lee el archivo locales.txt.
+     * @return Lista de locales.
+     */
     public static ArrayList<Local> leerLocales() {
         try ( BufferedReader bfr = new BufferedReader(new FileReader("Locales.txt",StandardCharsets.UTF_8))) {
             ArrayList<Local> local = new ArrayList<>();

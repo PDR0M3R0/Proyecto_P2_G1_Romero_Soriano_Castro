@@ -3,14 +3,12 @@ package com.mycompany.proyecto_2p_sorianoalexander_romeropaul;
 import static com.mycompany.proyecto_2p_sorianoalexander_romeropaul.PedidoController.totalUsuario;
 import java.io.IOException;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -23,15 +21,13 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
  * FXML Controller class
- *
- * @author Usuario
+ * Controlador de la vista Pago.
  */
 public class PagoController implements Initializable {
     private Stage stage;
@@ -40,36 +36,64 @@ public class PagoController implements Initializable {
     
 
     /**
-     * Initializes the controller class.
+     * Inicializa la clase controladora.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //hola
     }
-
+/**
+ * Representa el grupo al que pertenecen los RadioButton de esta clase.
+ */
     @FXML
     private ToggleGroup grupo;
     
+/**
+ * Boton que lleva a la siguiente vista.
+ */
     @FXML
     private Button btnContinuar;
-
+    
+  /**
+ * Boton que limpia entradas de texto u otros valores.
+ */  
     @FXML
     private Button btnLimpiar;
-
+    
+/**
+ * Boton que se selecciona para realizar un pago en efectivo.
+ */  
     @FXML
     private RadioButton rButtonEfectivo;
-
+    
+/**
+ * Boton que se selecciona para realizar un pago con tarjeta.
+ */
     @FXML
     private RadioButton rButtonTarjeta;
-
+    
+/**
+ * Permite entrada de la ubicación del cliente para la entrega.
+ */
     @FXML
     private TextField txtDireccion;
-
+    
+/**
+ * Boton que varía dependiendo la selección del método de pago.
+ */
     @FXML
     private VBox vBoxInteractive;
+    
+/**
+ * Boton que permite salir al Menu o cerrar la ventana.
+ */
     @FXML
     private Button btnSalir;
 
+/**
+ * Representa la funcionalidad del btnSalir.
+ * @param event 
+ */
     @FXML
     void Salir(ActionEvent event) {
         ButtonType menu = new ButtonType("Menú");
@@ -93,6 +117,11 @@ public class PagoController implements Initializable {
         }
     }
 
+/**
+ * Permite el cambio de vista de Pedido a Pago.
+ * @param event
+ * @throws IOException 
+ */
     @FXML
     void continuar(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("MuchasGracias.fxml"));
@@ -101,12 +130,19 @@ public class PagoController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
+    
+/**
+ * Da funcionalidad a btnLimpiar.
+ * @param event 
+ */
     @FXML
     void limpiar(ActionEvent event) {
 
     }
-
+/**
+ * Da funcionalidad a rButtonEfectivo.
+ * @param event 
+ */
     @FXML
     private void selecEfectivo(ActionEvent event) {
         vBoxInteractive.getChildren().clear();
@@ -116,6 +152,10 @@ public class PagoController implements Initializable {
         vBoxInteractive.getChildren().add(texto);
     }
 
+/**
+ * Da funcionalidad a rButtonTarjeta.
+ * @param event 
+ */
     @FXML
     private void selecTarjeta(ActionEvent event) {
         double nuevoTotal = (totalUsuario + (totalUsuario * 0.05));

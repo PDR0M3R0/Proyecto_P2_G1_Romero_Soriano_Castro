@@ -1,14 +1,29 @@
 package Clases;
 
 /**
- *
- * @author axsl3
+ * Representa un plato específico que se encuentran a disposición del usuario.
  */
 public class Comida {
-
+    
+    /**
+     * Representa el identificador de la comida.
+     */
     String descripcion;
+    /**
+     * Representa el valor unitario de la comida.
+     */
     double precio;
+    /**
+     * Representa la clasificación del plato.
+     */
     String tipoMenu; //Enum posiblemente
+    
+    /**
+     * Crea una instancia de la clase Comida.
+     * @param descripcion
+     * @param precio
+     * @param tipoMenu 
+     */
 
     public Comida(String descripcion, double precio, String tipoMenu) {
         this.descripcion = descripcion;

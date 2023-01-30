@@ -1,13 +1,29 @@
 package Clases;
 
-/**
- *
- * @author pdrb1
+/** 
+ * Representa los platos clasificados por su tipo.
  */
 public class Menu {
+    
+    /**
+     * Representa el identificador del menu.
+     */
     private String descripcion;
+    /** 
+     * Representa el precio de un plato del menu.
+     */
     private double precio;
+    /**
+     * Representa el tipo de menu y pueden ser plato fuerte, postre, piqueo o bebida.
+     */
     private String tipo;
+    
+    /**
+     * Crea una instancia de la clase Menu
+     * @param descripcion
+     * @param precio
+     * @param tipo 
+     */
     
     public Menu(String descripcion,double precio,String tipo){
         this.descripcion = descripcion;
