@@ -2,6 +2,7 @@ package com.mycompany.proyecto_2p_sorianoalexander_romeropaul;
 
 import Clases.Menu;
 import Clases.Pedido;
+import Clases.ValorInsuficienteException;
 import static com.mycompany.proyecto_2p_sorianoalexander_romeropaul.IngresoSistemaController.usuarioIngreso;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -254,13 +255,32 @@ public class PedidoController implements Initializable {
                 Label lblprecio = new Label(String.valueOf(m.getPrecio()));
                 TextField cant = new TextField();
                 Button btnEscoger = new Button("Agregar");
+                
                 btnEscoger.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
                     @Override
                     public void handle(MouseEvent t) {
-                        Pedido p = new Pedido(m.getDescripcion(), usuarioIngreso.getNombreApellido(), Integer.parseInt(cant.getText()), m.getPrecio());
-                        pedidolista.add(p);
-                        mostrarPedidos();
+                        try{
+                            int cantidad = Integer.parseInt(cant.getText());
+                            
+                            if(cantidad != 0){
+                                Pedido p = new Pedido(m.getDescripcion(), usuarioIngreso.getNombreApellido(),cantidad, m.getPrecio());
+                                pedidolista.add(p);
+                                mostrarPedidos();
+                            }else{
+                                Alert alertaa = new Alert(Alert.AlertType.ERROR);
+                                alertaa.setTitle("Error de Registro");
+                                alertaa.setHeaderText("No ha sido posible registrar este pedido");
+                                alertaa.showAndWait();  
+                                
+                                throw new ValorInsuficienteException("Ha introducido 0");
+                                
+                            }
+                            
+                        }catch(ValorInsuficienteException e){
+                            
+                            
+                        }
 
                     }
                 });
