@@ -1,20 +1,44 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Clases;
 
 /**
- *
- * @author axsl3
+ *  Se genera de la realización de un pedido.
  */
 public class Pago {
+    
+    /**
+     * Representa el identificador del pago.
+     */
     int idPago;
+    /**
+     * Representa el identificador del pedido realizado por el usuario.
+     */
     int idPedido;
+    /**
+     * Representa un identificador de quien realiza el pago.
+     */
     String nombreCliente;
+    /**
+     * Valor que se genera al realizar un pedido.
+     */
     double totalPagar;
+    /**
+     * Representa el momento en que se realizó el pedido.
+     */
     String fecha;
+    /**
+     * Representa el metódo de pago del usuario y puede ser efectivo o tarjeta.
+     */
     String tipo; //Enum posiblemente 
+    
+    /**
+     * Crea una instancia de la clase Pago
+     * @param idPago
+     * @param idPedido
+     * @param nombreCliente
+     * @param totalPagar
+     * @param fecha
+     * @param tipo 
+     */
 
     public Pago(int idPago, int idPedido, String nombreCliente, double totalPagar, String fecha, String tipo) {
         this.idPago = idPago;

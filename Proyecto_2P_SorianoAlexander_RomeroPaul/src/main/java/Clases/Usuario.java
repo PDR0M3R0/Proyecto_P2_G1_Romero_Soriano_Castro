@@ -1,15 +1,19 @@
 package Clases;
 
 /**
- *
- * @author pdrb1
+ * Representa al cliente que realizará un pedido o consulta.
  */
 public class Usuario {
     private String usuario;
     private String contrasena;
     private String nombreApellido;
     
-      
+    /**
+     * Crea una instancia de la clase Usuario
+     * @param usuario
+     * @param contrasena
+     * @param nombreApellido 
+     */
     //Para clientes que tienen tarjeta
     public Usuario(String usuario,String contrasena,String nombreApellido){
         this.usuario = usuario;
@@ -52,4 +56,3 @@ public class Usuario {
     
     
 }
-

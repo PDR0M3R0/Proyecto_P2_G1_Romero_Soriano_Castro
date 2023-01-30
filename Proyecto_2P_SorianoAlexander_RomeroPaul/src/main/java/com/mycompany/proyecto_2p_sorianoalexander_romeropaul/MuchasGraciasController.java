@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package com.mycompany.proyecto_2p_sorianoalexander_romeropaul;
 
 import java.net.URL;
@@ -9,30 +5,39 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-import javafx.stage.WindowEvent;
 
 /**
  * FXML Controller class
- *
+ * Controlador de la vista MuchasGracias.
  * @author Usuario
  */
 public class MuchasGraciasController implements Initializable {
 
+    /**
+     * Representa el escenario de la vista.
+     */
     private Stage stage;
+    /**
+     * Representa la escena o vista.
+     */
     private Scene scene;
+    /**
+     * Representa el mensaje a mostrar una vez que se muestre la vista.
+     */
     @FXML
     private Text texto;
+    /**
+     * Mensaje que cambia acorde un conteo regresivo.
+     */
     @FXML
     private Label cerrando;
 
     /**
-     * Initializes the controller class.
+     * Inicializa la clase controladora.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -41,7 +46,10 @@ public class MuchasGraciasController implements Initializable {
         hiloCerrar();
         cerrar();
     }
-
+    
+/**
+ * Da funcionalidad al hilo que controla el conteo regresivo.
+ */
     void hiloCerrar() {
         Thread t2 = new Thread(new Runnable() {
             @Override
@@ -68,7 +76,10 @@ public class MuchasGraciasController implements Initializable {
         t2.start();
 
     }
-
+    
+/**
+ * Cierra la vista MuchasGracias.
+ */
     void cerrar() {
         Thread t3 = new Thread(new Runnable() {
             @Override

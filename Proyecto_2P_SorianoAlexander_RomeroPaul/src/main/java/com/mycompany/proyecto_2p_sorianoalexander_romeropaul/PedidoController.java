@@ -40,8 +40,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 /**
- * FXML Controller class
- *
+ * FXML Controller class -- Este controlador se encarga de gestionar la ventana de pedido 
  * @author pdrb1
  */
 
@@ -100,8 +99,11 @@ public class PedidoController implements Initializable {
     }
 
     
-
-    //Metodo que se usara ara poder regrsar o salir de la aplicacion:
+    /**
+    *Metodo que se usara ara poder regrsar o salir de la aplicacion:
+    *@param event un action event que esta relacionado al boton de salir 
+    *
+    **/
     @FXML
     public void Salir(ActionEvent event) {
         ButtonType menu = new ButtonType("Menú");
@@ -133,8 +135,11 @@ public class PedidoController implements Initializable {
     }
     
     
-    
-    //Metodo que se encarga de limpiar los gridpane pero tamvien los pedidos realizados en acumlativo
+    /**
+    *Metodo que se encarga de limpiar los gridpane pero tamvien los pedidos realizados en acumlativo
+    * @param ae action event que esta relacionado cn el boton de limpiar 
+    * 
+    **/
     @FXML
     public void limpiar(ActionEvent ae) {
         gridOpciones.getChildren().clear();
@@ -149,8 +154,10 @@ public class PedidoController implements Initializable {
     }
 
     
-    
-    //Aqui se carga la siguiente lista para proseguir con el pago del pedido:
+    /**
+    *Aqui se carga la siguiente lista para proseguir con el pago del pedido:
+    *@param ae action event asociado al boton de continuar 
+    **/
     @FXML
     public void continuar(ActionEvent ae) throws IOException {
         //aqui se debe registrar el pedido
@@ -165,8 +172,11 @@ public class PedidoController implements Initializable {
     }
     
     
-    
-    //Este metodo se encarga clasificar y mostrar en el gridpane, las opociones segun la clasificacion seleccionada:
+    /**
+    *Este metodo se encarga clasificar y mostrar en el gridpane, las opociones segun la clasificacion seleccionada:
+    * @param ae un actioneventque esta asocado al comboOpciones
+    * 
+    **/
     @FXML
     public void elegirTipo(ActionEvent ae) {
         String opcion = comboTipo.getValue();
@@ -242,8 +252,11 @@ public class PedidoController implements Initializable {
     }
 
     
-    
-    //Aqui te muestra las opcione del menu segun la clasificaion seleccionada en el combobox:
+    /**
+    *Aqui te muestra las opcione del menu segun la clasificaion seleccionada en el combobox:
+    * @param tipo un string que sirve para evaluar el tipo de clasificaicon del menu
+    * 
+    **/
     public void mostrarEnGridPane(String tipo) {
         gridOpciones.getChildren().clear();
         
@@ -298,8 +311,11 @@ public class PedidoController implements Initializable {
     }
     
     
-    
-    //Este metodo se encarga de ordenar el gridpane deediendo de si el usuario quiere ordenarlas por precio o por nombre: 
+    /**
+    *Este metodo se encarga de ordenar el gridpane deediendo de si el usuario quiere ordenarlas por precio o por nombre: 
+    *@param ae Evento relaciona al combo box para ordenar la lista de pedidos
+    * 
+    **/
     @FXML
     public void ordenarPor(ActionEvent ae) {
         String tipoOrden = comboOrden.getValue();
@@ -338,8 +354,10 @@ public class PedidoController implements Initializable {
     }
     
     
-    
-    //Este metodo retorna una lista de las opciones que existen en em menu:
+    /**
+    *Este metodo retorna una lista de las opciones que existen en em menu:
+    * @return retorna un arraylist del tipo menu con el fin de habiliatar el recorrido de todos los platos existentes dentro de los archivos del menu
+    **/
     public ArrayList<Menu> leerMenu() {
         ArrayList<Menu> menulista = new ArrayList<>();
 
@@ -396,8 +414,10 @@ public class PedidoController implements Initializable {
     }
     
     
-    
-    // Metodo para crear Archivo de pedido formato(idPedido - nombre Cliente - Total):
+    /**
+    *Metodo para crear Archivo de pedido formato(idPedido - nombre Cliente - Total):
+    * @param pedidolista recibe como parametro una lista para someterla a seriablizaci[on
+    **/
     public void registrarPedido(ArrayList<Pedido> pedidolista) {
         double valor = 0.0;
 
